@@ -24,14 +24,11 @@ public class UserService {
 		return userList;
 	}
 
-	public User fetchUserById(Long id) {
+	public Optional<User> fetchUserById(Long id) {
 		if (id != null) {
-			Optional<User> userOption = userList.stream().filter(u -> id.equals(u.getId())).findFirst();
-			if (!userOption.isEmpty()) {
-				return userOption.get();
-			}
+			return userList.stream().filter(u -> id.equals(u.getId())).findFirst();
 		}
-		return null;
+		return Optional.ofNullable(null);
 	}
 
 }
