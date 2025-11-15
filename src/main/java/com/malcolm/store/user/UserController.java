@@ -6,10 +6,13 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.fasterxml.jackson.databind.JsonNode;
 
 import lombok.RequiredArgsConstructor;
 
@@ -36,4 +39,14 @@ public class UserController {
 		return userService.fetchUserById(id).map(ResponseEntity::ok)
 				.orElseGet(() -> ResponseEntity.noContent().build());
 	}
+
+	@PatchMapping("api/user/{id}")
+	public ResponseEntity<User> putMethodName(@PathVariable Long id, @RequestBody JsonNode jsonNode) {
+		User updatedUser = userService.patchUser(id, jsonNode);
+		if (updatedUser != null) {
+			return ResponseEntity.ok(updatedUser);
+		}
+		return ResponseEntity.badRequest().build();
+	}
+
 }
