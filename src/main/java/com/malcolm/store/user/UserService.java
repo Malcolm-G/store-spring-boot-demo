@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.malcolm.store.user.dto.UserRequest;
+import com.malcolm.store.user.dto.UserResponse;
 
 import lombok.RequiredArgsConstructor;
 
@@ -19,20 +21,32 @@ public class UserService {
 	@Autowired
 	private ObjectMapper objectMapper;
 	private final UserRepository userRepository;
+	@Autowired
+	private UserMapper userMapper;
 
-	public User createUser(User user) {
-		return userRepository.save(user);
+	public User createUser(UserRequest userRequest) {
+		return userRepository.save(userMapper.toUser(userRequest));
 	}
 
-	public List<User> fetchAllUsers() {
-		return userRepository.findAll();
+	public List<UserResponse> fetchAllUsers() {
+		return userRepository.findAll().stream().map(u -> userMapper.toResponse(u)).toList();
 	}
 
-	public Optional<User> fetchUserById(Long id) {
-		return userRepository.findById(id);
+	public Optional<UserResponse> fetchUserById(Long id) {
+		return userRepository.findById(id).map(userMapper::toResponse);
 	}
 
-	public User patchUser(Long id, JsonNode update) {
+	/**
+	 * Used when I was using the json from the request. Very manual process because
+	 * spring normally converts for you. I didn't use DTOs at that time and so this
+	 * was my way of working with minimal data.
+	 * 
+	 * @param id
+	 * @param update
+	 * @deprecated
+	 * @return
+	 */
+	public User patchUserOld(Long id, JsonNode update) {
 		// Get user by the id
 		User user = userRepository.findById(id).orElse(null);
 
@@ -46,6 +60,18 @@ public class UserService {
 		}
 
 		return user;
+	}
+
+	public UserResponse patchUser(Long id, UserRequest update) {
+		// Get user by the id
+		User user = userRepository.findById(id).orElse(null);
+
+		if (user != null) {
+			userMapper.updateEntity(update, user);
+			return userMapper.toResponse(userRepository.save(user));
+		}
+
+		return null;
 	}
 
 }

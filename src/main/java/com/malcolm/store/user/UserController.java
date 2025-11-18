@@ -13,7 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.fasterxml.jackson.databind.JsonNode;
+import com.malcolm.store.user.dto.UserRequest;
+import com.malcolm.store.user.dto.UserResponse;
 
 import lombok.RequiredArgsConstructor;
 
@@ -26,13 +27,13 @@ public class UserController {
 	private final UserService userService;
 
 	@GetMapping
-	public ResponseEntity<List<User>> getAllUsers() {
+	public ResponseEntity<List<UserResponse>> getAllUsers() {
 		return ResponseEntity.ok(userService.fetchAllUsers());
 	}
 
 	@PostMapping
-	public ResponseEntity<String> createUser(@RequestBody User user) {
-		userService.createUser(user);
+	public ResponseEntity<String> createUser(@RequestBody UserRequest request) {
+		userService.createUser(request);
 		return ResponseEntity.ok("User created successfully");
 	}
 
@@ -45,14 +46,14 @@ public class UserController {
 	 * @return
 	 */
 	@GetMapping(path = "/{id}")
-	public ResponseEntity<User> fetchUserbyId(@PathVariable Long id) {
+	public ResponseEntity<UserResponse> fetchUserbyId(@PathVariable Long id) {
 		return userService.fetchUserById(id).map(ResponseEntity::ok)
 				.orElseGet(() -> ResponseEntity.noContent().build());
 	}
 
 	@PatchMapping("/{id}")
-	public ResponseEntity<User> putMethodName(@PathVariable Long id, @RequestBody JsonNode jsonNode) {
-		User updatedUser = userService.patchUser(id, jsonNode);
+	public ResponseEntity<UserResponse> putMethodName(@PathVariable Long id, @RequestBody UserRequest request) {
+		UserResponse updatedUser = userService.patchUser(id, request);
 		if (updatedUser != null) {
 			return ResponseEntity.ok(updatedUser);
 		}
