@@ -25,21 +25,26 @@ public class ProductController {
 
 	@Autowired
 	private final ProductService productService;
+	@Autowired
+	private final ProductMapper mapper;
 
 	@PostMapping
-	public ResponseEntity<ProductResponse> createProdcut(@RequestBody ProductRequest productRequest) {
-		return ResponseEntity.ok(productService.createProduct(productRequest));
+	public ResponseEntity<ProductResponse> createProdcut(@RequestBody ProductRequest request) {
+		Product product = productService.createProduct(mapper.toProduct(request));
+		return ResponseEntity.ok(mapper.toResponse(product));
 	}
 
 	@GetMapping
 	public ResponseEntity<List<ProductResponse>> getProducts() {
-		return ResponseEntity.ok(productService.getAllProducts());
+		List<ProductResponse> response = productService.getAllProducts().stream().map(p -> mapper.toResponse(p))
+				.toList();
+		return ResponseEntity.ok(response);
 	}
 
 	@PutMapping("/{id}")
 	public ResponseEntity<ProductResponse> updateProduct(@PathVariable Long id, @RequestBody ProductRequest request) {
-		ProductResponse response = productService.updateProduct(id, request);
-		return response != null ? ResponseEntity.ok(response) : ResponseEntity.notFound().build();
+		Product product = productService.updateProduct(id, request);
+		return product != null ? ResponseEntity.ok(mapper.toResponse(product)) : ResponseEntity.notFound().build();
 	}
 
 	@DeleteMapping("/{id}")
