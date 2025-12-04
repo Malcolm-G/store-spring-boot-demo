@@ -17,10 +17,11 @@ import com.malcolm.store.product.dto.ProductRequest;
 import com.malcolm.store.product.dto.ProductResponse;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/prodcuts")
+@RequestMapping("/api/products")
 public class ProductController {
 
 	@Autowired
@@ -41,6 +42,13 @@ public class ProductController {
 		return ResponseEntity.ok(response);
 	}
 
+	@GetMapping("/active")
+	public ResponseEntity<List<ProductResponse>> getAllActiveProducts() {
+		List<ProductResponse> response = productService.getAllActiveProducts().stream().map(p -> mapper.toResponse(p))
+				.toList();
+		return ResponseEntity.ok(response);
+	}
+
 	@PutMapping("/{id}")
 	public ResponseEntity<ProductResponse> updateProduct(@PathVariable Long id, @RequestBody ProductRequest request) {
 		Product product = productService.updateProduct(id, request);
@@ -48,8 +56,15 @@ public class ProductController {
 	}
 
 	@DeleteMapping("/{id}")
-	public ResponseEntity<Void> deleteProduct(Long id) {
+	public ResponseEntity<Void> deleteProduct(@PathVariable Long id) {
 		boolean deleted = productService.deleteProduct(id);
 		return deleted ? ResponseEntity.noContent().build() : ResponseEntity.notFound().build();
 	}
+
+	@GetMapping("/search")
+	public ResponseEntity<List<ProductResponse>> searchProducts(@RequestParam String keyword) {
+		return ResponseEntity
+				.ok(productService.searchProducts(keyword).stream().map(p -> mapper.toResponse(p)).toList());
+	}
+
 }

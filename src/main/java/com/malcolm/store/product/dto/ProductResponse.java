@@ -1,5 +1,16 @@
 package com.malcolm.store.product.dto;
 
-public class ProductResponse {
+import java.math.BigDecimal;
 
+import lombok.Data;
+
+@Data
+public class ProductResponse {
+	private String name;
+	private String description;
+	private BigDecimal price;
+	private Integer stockQuantity;
+	private String category;
+	private String imageUrl;
+	private String active;
 }
