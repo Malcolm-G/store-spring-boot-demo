@@ -1,6 +1,7 @@
 package com.malcolm.store.cart;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
@@ -80,12 +81,23 @@ public class CartService {
 			return false;
 		}
 
-		return userOpt.flatMap(user ->
-			productOpt.map(product -> {
-				cartItemRepository.deleteByUserAndProduct(user, product);
-				return true;
-			})
-		).orElse(false);
+		return userOpt.flatMap(user -> productOpt.map(product -> {
+			cartItemRepository.deleteByUserAndProduct(user, product);
+			return true;
+		})).orElse(false);
+	}
+
+	public List<CartItem> fetchUserCart(String userId) {
+		// Look for user
+		Optional<User> userOpt = userRepository.findById(Long.valueOf(userId));
+
+		if (userOpt.isEmpty()) {
+			return null;
+		}
+		User user = userOpt.get();
+		
+		List<CartItem> cartItems = cartItemRepository.findByUser(user);
+		return cartItems;
 	}
 
 }

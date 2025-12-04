@@ -1,13 +1,11 @@
 package com.malcolm.store.product;
 
-import java.util.Collection;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.malcolm.store.product.dto.ProductRequest;
-import com.malcolm.store.product.dto.ProductResponse;
 
 import lombok.RequiredArgsConstructor;
 
