@@ -16,7 +16,7 @@ spring:
     #    hibernate:
     #      ddl-auto: create
     datasource:
-        url: jdbc:postgresql://localhost:5432/storeDB
+        url: jdbc:postgresql://localhost:5432/storedb
         username: malcolm
         password: malcolm
 
