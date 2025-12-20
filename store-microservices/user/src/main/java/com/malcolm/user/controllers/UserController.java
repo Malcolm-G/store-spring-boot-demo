@@ -47,13 +47,13 @@ public class UserController {
 	 * @return
 	 */
 	@GetMapping(path = "/{id}")
-	public ResponseEntity<UserResponse> fetchUserbyId(@PathVariable Long id) {
+	public ResponseEntity<UserResponse> fetchUserbyId(@PathVariable String id) {
 		return userService.fetchUserById(id).map(ResponseEntity::ok)
-				.orElseGet(() -> ResponseEntity.noContent().build());
+				.orElseGet(() -> ResponseEntity.notFound().build());
 	}
 
 	@PatchMapping("/{id}")
-	public ResponseEntity<UserResponse> putMethodName(@PathVariable Long id, @RequestBody UserRequest request) {
+	public ResponseEntity<UserResponse> putMethodName(@PathVariable String id, @RequestBody UserRequest request) {
 		UserResponse updatedUser = userService.patchUser(id, request);
 		if (updatedUser != null) {
 			return ResponseEntity.ok(updatedUser);

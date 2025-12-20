@@ -35,7 +35,7 @@ public class UserService {
 		return userRepository.findAll().stream().map(u -> userMapper.toResponse(u)).toList();
 	}
 
-	public Optional<UserResponse> fetchUserById(Long id) {
+	public Optional<UserResponse> fetchUserById(String id) {
 		return userRepository.findById(id).map(userMapper::toResponse);
 	}
 
@@ -49,7 +49,7 @@ public class UserService {
 	 * @deprecated
 	 * @return
 	 */
-	public User patchUserOld(Long id, JsonNode update) {
+	public User patchUserOld(String id, JsonNode update) {
 		// Get user by the id
 		User user = userRepository.findById(id).orElse(null);
 
@@ -65,7 +65,7 @@ public class UserService {
 		return user;
 	}
 
-	public UserResponse patchUser(Long id, UserRequest update) {
+	public UserResponse patchUser(String id, UserRequest update) {
 		// Get user by the id
 		User user = userRepository.findById(id).orElse(null);
 
