@@ -12,9 +12,9 @@ spring:
     #        hibernate:
     #            ddl-auto: create
     datasource:
-        url: jdbc:postgresql://localhost:5432/product
-        username: malcolm
-        password: malcolm
+        url: jdbc:postgresql://ep-fragrant-bar-agynj9nb-pooler.c-2.eu-central-1.aws.neon.tech/product?sslmode=require&channelBinding=require
+        username: ${POSTGRESQL_USER}
+        password: ${POSTGRESQL_PASSWORD}
 
     jpa:
         database: POSTGRESQL
