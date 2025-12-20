@@ -24,7 +24,7 @@ spring:
     #        database-platform: org.hibernate.dialect.PostgreSQLDialect
     data:
         mongodb:
-            uri: mongodb://localhost:27017/userdb
+            uri: ${MONGODB_URI:?MONGODB_URI is required}
             database: userdb
 
 server:
