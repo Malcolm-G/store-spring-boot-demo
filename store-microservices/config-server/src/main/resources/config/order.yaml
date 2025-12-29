@@ -13,12 +13,24 @@ spring:
         username: malcolm
         password: malcolm
 
+    rabbitmq:
+        host: localhost
+        port: 5672
+        username: guest
+        password: guest
+
     jpa:
         database: POSTGRESQL
         show-sql: true
         hibernate:
             ddl-auto: create
         database-platform: org.hibernate.dialect.PostgreSQLDialect
+
+management:
+    endpoints:
+        web:
+            exposure:
+                include: "*"
 
 server:
     port: 8083

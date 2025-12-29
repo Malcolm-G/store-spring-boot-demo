@@ -9,11 +9,11 @@ spring:
                 native:
                     search-locations: classpath:/config ##May not dynamically update on refreshes since the classes are bundled on initial startup. Youcan also use file as shown below
                     #search-locations: file:///C:\Users\malco\OneDrive\Desktop\Coding\java\store\config-server\src\main\resources\config
-#    rabbitmq:
-#        host: localhost
-#        port: 5672
-#        username: guest
-#        password: guest
+    rabbitmq:
+        host: localhost
+        port: 5672
+        username: guest
+        password: guest
 
 management:
     endpoints:
