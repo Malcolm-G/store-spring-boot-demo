@@ -1,0 +1,27 @@
+spring:
+    #    h2:
+    #        console:
+    #            enabled: true
+    #    datasource:
+    #        url: jdbc:h2:mem:test
+    #    jpa:
+    #        show-sql: true
+    #        hibernate:
+    #            ddl-auto: create
+    datasource:
+        url: jdbc:postgresql://ep-fragrant-bar-agynj9nb-pooler.c-2.eu-central-1.aws.neon.tech/product?sslmode=require&channelBinding=require
+        username: ${POSTGRESQL_USER}
+        password: ${POSTGRESQL_PASSWORD}
+
+    jpa:
+        database: POSTGRESQL
+        show-sql: true
+        hibernate:
+            ddl-auto: create
+        database-platform: org.hibernate.dialect.PostgreSQLDialect
+        properties:
+            hibernate:
+                format_sql: true
+
+server:
+    port: 8081
