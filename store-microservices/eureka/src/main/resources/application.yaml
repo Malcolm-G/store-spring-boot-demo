@@ -1,0 +1,20 @@
+spring:
+    application:
+        name: eureka
+
+eureka:
+    client:
+        register-with-eureka: false
+        fetch-registry: false
+
+management:
+    endpoints:
+        web:
+            exposure:
+                include:
+                    - shutdown
+    endpoint:
+        shutdown:
+            access: unrestricted
+server:
+    port: 8761
