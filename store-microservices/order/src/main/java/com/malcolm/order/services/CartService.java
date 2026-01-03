@@ -9,7 +9,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.malcolm.order.dto.CartItemRequest;
 import com.malcolm.order.dto.ProductDTO;
+import com.malcolm.order.dto.UserDTO;
 import com.malcolm.order.httpInterface.ProductHttpInterface;
+import com.malcolm.order.httpInterface.UserHttpInterface;
 import com.malcolm.order.models.CartItem;
 import com.malcolm.order.repositories.CartItemRepository;
 
@@ -24,6 +26,7 @@ public class CartService {
 //	private final UserRepository userRepository;
 //	private final ProductRepository productRepository;
 	private final ProductHttpInterface productClient;
+	private final UserHttpInterface userClient;
 
 	public boolean addToCart(String userId, CartItemRequest request) {
 
@@ -39,14 +42,12 @@ public class CartService {
 			return false;
 		}
 
-		/*
-		 * // Look for user Optional<User> userOpt =
-		 * userRepository.findById(Long.valueOf(userId));
-		 * 
-		 * if (userOpt.isEmpty()) { return false; }
-		 * 
-		 * User user = userOpt.get();
-		 */
+		// Look for user
+		Optional<UserDTO> userOpt = userClient.fetchUserbyId(userId);
+
+		if (userOpt.isEmpty()) {
+			return false;
+		}
 
 		String productId = String.valueOf(request.getProductId());
 		CartItem existingCartItem = cartItemRepository.findByUserIdAndProductId(userId, productId);

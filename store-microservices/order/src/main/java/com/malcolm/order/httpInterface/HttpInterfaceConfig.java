@@ -30,4 +30,16 @@ public class HttpInterfaceConfig {
 		ProductHttpInterface service = factory.createClient(ProductHttpInterface.class);
 		return service;
 	}
+
+	@Bean
+	UserHttpInterface restClientUserHttpInterface(RestClient.Builder loadBalancedRestClientBuilder) {
+		@SuppressWarnings("unused")
+		RestClient restClient = loadBalancedRestClientBuilder.baseUrl("http://user")
+				.defaultStatusHandler(HttpStatusCode::is4xxClientError, (request, response) -> Optional.empty())
+				.build();
+		RestClientAdapter adapter = RestClientAdapter.create(restClient);
+		HttpServiceProxyFactory factory = HttpServiceProxyFactory.builderFor(adapter).build();
+		UserHttpInterface service = factory.createClient(UserHttpInterface.class);
+		return service;
+	}
 }
