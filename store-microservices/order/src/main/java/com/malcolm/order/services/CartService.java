@@ -2,11 +2,14 @@ package com.malcolm.order.services;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.malcolm.order.dto.CartItemRequest;
+import com.malcolm.order.dto.ProductDTO;
+import com.malcolm.order.httpInterface.ProductHttpInterface;
 import com.malcolm.order.models.CartItem;
 import com.malcolm.order.repositories.CartItemRepository;
 
@@ -20,17 +23,23 @@ public class CartService {
 	private final CartItemRepository cartItemRepository;
 //	private final UserRepository userRepository;
 //	private final ProductRepository productRepository;
+	private final ProductHttpInterface productClient;
 
 	public boolean addToCart(String userId, CartItemRequest request) {
+
+		// Look for product
+		Optional<ProductDTO> productOpt = productClient.findById(request.getProductId());
+
+		if (productOpt.isEmpty()) {
+			return false;
+		}
+		ProductDTO product = productOpt.get();
+
+		if (product.getStockQuantity() < request.getQuantity()) {
+			return false;
+		}
+
 		/*
-		 * // Look for product Optional<Product> productOpt =
-		 * productRepository.findById(request.getProductId());
-		 * 
-		 * if (productOpt.isEmpty()) { return false; } Product product =
-		 * productOpt.get();
-		 * 
-		 * if (product.getStockQuantity() < request.getQuantity()) { return false; }
-		 * 
 		 * // Look for user Optional<User> userOpt =
 		 * userRepository.findById(Long.valueOf(userId));
 		 * 

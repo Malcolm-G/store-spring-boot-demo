@@ -35,8 +35,18 @@ public class ProductController {
 		return ResponseEntity.ok(mapper.toResponse(product));
 	}
 
+	@GetMapping("/{productId}")
+	public ResponseEntity<ProductResponse> getActiveProduct(@PathVariable Long productId) {
+		ProductResponse response = productService.getActiveProductById(productId).map(p -> mapper.toResponse(p))
+				.orElse(null);
+		if (response == null) {
+			return ResponseEntity.notFound().build();
+		}
+		return ResponseEntity.ok(response);
+	}
+
 	@GetMapping
-	public ResponseEntity<List<ProductResponse>> getProducts() {
+	public ResponseEntity<List<ProductResponse>> getProductById() {
 		List<ProductResponse> response = productService.getAllProducts().stream().map(p -> mapper.toResponse(p))
 				.toList();
 		return ResponseEntity.ok(response);

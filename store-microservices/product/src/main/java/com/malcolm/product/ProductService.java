@@ -1,8 +1,8 @@
 package com.malcolm.product;
 
 import java.util.List;
+import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.malcolm.product.dto.ProductRequest;
@@ -13,11 +13,14 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ProductService {
 
-	@Autowired
 	private final ProductRepository repository;
 
 	public Product createProduct(Product product) {
 		return repository.save(product);
+	}
+
+	public Optional<Product> getActiveProductById(Long productId) {
+		return repository.findByIdAndActiveTrue(productId);
 	}
 
 	public List<Product> getAllProducts() {
