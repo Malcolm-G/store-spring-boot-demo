@@ -16,9 +16,11 @@ import com.malcolm.user.models.User;
 import com.malcolm.user.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class UserService {
 
 	@Autowired
@@ -71,6 +73,7 @@ public class UserService {
 
 		if (user != null) {
 			userMapper.updateEntity(update, user);
+			log.info("User with id: {} has been updated", user.getId());
 			return userMapper.toResponse(userRepository.save(user));
 		}
 

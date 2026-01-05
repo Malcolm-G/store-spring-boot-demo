@@ -48,5 +48,10 @@ management:
         shutdown:
             access: unrestricted
 
+logging:
+    level:
+        root: INFO
+        com.malcolm.user: INFO                        
+
 server:
     port: 8082
