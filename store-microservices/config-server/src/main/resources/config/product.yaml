@@ -52,7 +52,7 @@ logging:
         root: INFO
         com.malcolm.user: INFO
     file:
-        name: logs/${spring.application.name}.log
+        name: ../logs/${spring.application.name}.log
     logback:
         rollingpolicy:
             max-file-size: 5MB
