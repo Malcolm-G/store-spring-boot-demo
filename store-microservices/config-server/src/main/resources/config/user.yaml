@@ -47,6 +47,9 @@ management:
     endpoint:
         shutdown:
             access: unrestricted
+    tracing:
+        sampling:
+            probability: 1.0
 
 logging:
     level:
