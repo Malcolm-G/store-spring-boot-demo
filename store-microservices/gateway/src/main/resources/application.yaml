@@ -20,5 +20,23 @@ spring:
                           predicates:
                               - Path=/api/orders/**, /api/cart/**
 
+logging:
+    level:
+        root: INFO
+#        org.springframework.cloud.gateway.route.RouteDefinitionLocator: INFO
+#        org.springframework.cloud.gateway: TRACE
+
+management:
+    endpoints:
+        web:
+            exposure:
+                include: "*"
+    endpoint:
+        shutdown:
+            access: unrestricted
+    tracing:
+        sampling:
+            probability: 1.0
+
 server:
     port: 8080
