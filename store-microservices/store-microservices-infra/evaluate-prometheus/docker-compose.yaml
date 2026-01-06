@@ -226,6 +226,14 @@ services:
         networks:
             - loki
 
+    zipkin:
+        container_name: zipkin
+        image: openzipkin/zipkin
+        ports:
+            - 9411:9411
+        networks:
+            - loki
+
     flog:
         image: mingrammer/flog
         command: -f json -d 200ms -l
