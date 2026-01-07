@@ -19,6 +19,16 @@ spring:
                           uri: lb://order
                           predicates:
                               - Path=/api/orders/**, /api/cart/**
+                        - id: eureka-server
+                          uri: http://localhost:8761
+                          predicates:
+                              - Path=/eureka/main
+                          filters:
+                              - SetPath=/
+                        - id: eureka-server-static ## Allow static files to be loaded for the eureka page
+                          uri: http://localhost:8761
+                          predicates:
+                              - Path=/eureka/**
 
 logging:
     level:
