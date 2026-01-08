@@ -43,9 +43,28 @@ management:
     endpoint:
         shutdown:
             access: unrestricted
+        health:
+            show-details: always
+    health:
+        circuitbreakers:
+            enabled: true
     tracing:
         sampling:
             probability: 1.0
+
+# Circuit Breaker. You can find properties at https://resilience4j.readme.io/docs/circuitbreaker#create-and-configure-a-circuitbreaker
+resilience4j:
+    circuitbreaker:
+        instances:
+            product:
+                registerHealthIndicator: true
+                slidingWindowSize: 10
+                minimumNumberOfCalls: 5
+                permittedNumberOfCallsInHalfOpenState: 3
+                waitDurationInOpenState: 10s
+                failureRateThreshold: 50
+                automaticTransitionFromOpenToHalfOpenEnabled: true
+                slidingWindowType: count_based
 
 logging:
     level:

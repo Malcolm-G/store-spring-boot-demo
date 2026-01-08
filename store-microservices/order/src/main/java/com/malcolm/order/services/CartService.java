@@ -15,6 +15,7 @@ import com.malcolm.order.httpInterface.UserHttpInterface;
 import com.malcolm.order.models.CartItem;
 import com.malcolm.order.repositories.CartItemRepository;
 
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -28,6 +29,7 @@ public class CartService {
 	private final ProductHttpInterface productClient;
 	private final UserHttpInterface userClient;
 
+	@CircuitBreaker(name = "product") // Name is the instance defined in yaml config
 	public boolean addToCart(String userId, CartItemRequest request) {
 
 		// Look for product
