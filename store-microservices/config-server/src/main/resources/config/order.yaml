@@ -70,6 +70,12 @@ resilience4j:
             retryBreaker:
                 maxAttempts: 5
                 waitDuration: 500ms
+    ratelimiter:
+        instances:
+            rateBreaker:
+                timeout-duration: 0
+                limit-refresh-period: 4s
+                limit-for-period: 2
 
 logging:
     level:
@@ -81,6 +87,9 @@ logging:
         rollingpolicy:
             max-file-size: 5MB
             max-history: 7
+
+app:
+    message: "Hello Order!"
 
 server:
     port: 8083
