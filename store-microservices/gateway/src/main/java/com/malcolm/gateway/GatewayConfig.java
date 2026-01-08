@@ -2,14 +2,20 @@ package com.malcolm.gateway;
 
 import org.springframework.cloud.gateway.route.RouteLocator;
 import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
-//@Configuration
+@Configuration
 public class GatewayConfig {
 
-//	@Bean
+	@Bean
 	public RouteLocator customRouteLocator(RouteLocatorBuilder builder) {
 
-		return builder.routes().route("product", r -> r.path("/products/**").uri("lb://product"))
+		return builder.routes()
+				.route("product", r -> r.path("/api/products/**")
+						.filters(f -> f.circuitBreaker(
+								config -> config.setName("storeBreaker").setFallbackUri("forward:/fallback/products")))
+						.uri("lb://product"))
 				.route("user", r -> r.path("/api/users/**").uri("lb://user"))
 				.route("order", r -> r.path("/api/orders/**", "/api/cart/**").uri("lb://order"))
 				.route("eureka-server",
