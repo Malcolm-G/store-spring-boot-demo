@@ -29,7 +29,7 @@ public class CartService {
 	private final ProductHttpInterface productClient;
 	private final UserHttpInterface userClient;
 
-	@CircuitBreaker(name = "product") // Name is the instance defined in yaml config
+	@CircuitBreaker(name = "product", fallbackMethod = "addToCartFallback") // Name is the instance defined in yaml config
 	public boolean addToCart(String userId, CartItemRequest request) {
 
 		// Look for product
@@ -71,6 +71,11 @@ public class CartService {
 		}
 
 		return true;
+	}
+
+	public boolean addToCartFallback(String userId, CartItemRequest request, Exception exception) {
+		System.out.println("FALLBACK CALLED");
+		return false;
 	}
 
 	public boolean deleteItemFromCart(String userId, String productId) {
