@@ -15,7 +15,7 @@ import com.malcolm.order.httpInterface.UserHttpInterface;
 import com.malcolm.order.models.CartItem;
 import com.malcolm.order.repositories.CartItemRepository;
 
-import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import io.github.resilience4j.retry.annotation.Retry;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -28,10 +28,12 @@ public class CartService {
 //	private final ProductRepository productRepository;
 	private final ProductHttpInterface productClient;
 	private final UserHttpInterface userClient;
+	int retryAttempt = 0;
 
-	@CircuitBreaker(name = "product", fallbackMethod = "addToCartFallback") // Name is the instance defined in yaml config
+//	@CircuitBreaker(name = "product", fallbackMethod = "addToCartFallback") // Name is the instance defined in yaml config
+	@Retry(name = "retryBreaker", fallbackMethod = "addToCartFallback")
 	public boolean addToCart(String userId, CartItemRequest request) {
-
+		System.out.println("ATTEMPT COUNT: " + retryAttempt++);
 		// Look for product
 		Optional<ProductDTO> productOpt = productClient.findById(request.getProductId());
 
