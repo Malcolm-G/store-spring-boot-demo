@@ -4,17 +4,20 @@ import org.springframework.cloud.gateway.route.RouteLocator;
 import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 
 @Configuration
 public class GatewayConfig {
 
 	@Bean
 	public RouteLocator customRouteLocator(RouteLocatorBuilder builder) {
-
+		// Retries are for when a service throws an error. Circuit breakers are for when
+		// the service is down
 		return builder.routes()
 				.route("product", r -> r.path("/api/products/**")
-						.filters(f -> f.circuitBreaker(
-								config -> config.setName("storeBreaker").setFallbackUri("forward:/fallback/products")))
+						.filters(f -> f.retry(retryConfig -> retryConfig.setRetries(10).setMethods(HttpMethod.GET))
+								.circuitBreaker(config -> config.setName("storeBreaker")
+										.setFallbackUri("forward:/fallback/products")))
 						.uri("lb://product"))
 				.route("user", r -> r.path("/api/users/**").uri("lb://user"))
 				.route("order", r -> r.path("/api/orders/**", "/api/cart/**").uri("lb://order"))
