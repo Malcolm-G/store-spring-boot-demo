@@ -2,9 +2,11 @@ package com.malcolm.order.services;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.malcolm.order.models.CartItem;
@@ -19,10 +21,14 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class OrderService {
 
-	@Autowired
 	private final OrderRepository orderRepository;
-	@Autowired
 	private final CartService cartService;
+	private final RabbitTemplate rabbitTemplate;
+	@Value("${rabbitmq.exchange.name}")
+	private String exchangeName;
+	@Value("${rabbitmq.routing.key}")
+	private String routingKey;
+
 //	@Autowired
 //	private final UserRepository userRepository;
 
@@ -57,6 +63,9 @@ public class OrderService {
 
 		// Clear the cart
 		cartService.clearCart(userId);
+
+		rabbitTemplate.convertAndSend(exchangeName, routingKey,
+				Map.of("orderId", savedOrder.getId(), "status", "CREATED"));
 
 		return Optional.of(savedOrder);
 	}
