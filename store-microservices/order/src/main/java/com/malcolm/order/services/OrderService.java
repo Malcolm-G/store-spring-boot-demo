@@ -2,13 +2,14 @@ package com.malcolm.order.services;
 
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import com.malcolm.order.dto.OrderCreatedEvent;
+import com.malcolm.order.mappers.OrderItemMapper;
 import com.malcolm.order.models.CartItem;
 import com.malcolm.order.models.Order;
 import com.malcolm.order.models.OrderItem;
@@ -28,6 +29,7 @@ public class OrderService {
 	private String exchangeName;
 	@Value("${rabbitmq.routing.key}")
 	private String routingKey;
+	private final OrderItemMapper orderItemMapper;
 
 //	@Autowired
 //	private final UserRepository userRepository;
@@ -64,8 +66,12 @@ public class OrderService {
 		// Clear the cart
 		cartService.clearCart(userId);
 
-		rabbitTemplate.convertAndSend(exchangeName, routingKey,
-				Map.of("orderId", savedOrder.getId(), "status", "CREATED"));
+		// Publish order created event
+		OrderCreatedEvent event = new OrderCreatedEvent(savedOrder.getId(), savedOrder.getUserId(),
+				savedOrder.getStatus(), savedOrder.getOrderItems().stream().map(item -> {
+					return orderItemMapper.toDto(item);
+				}).toList(), savedOrder.getTotalAmount(), savedOrder.getCreatedAt());
+		rabbitTemplate.convertAndSend(exchangeName, routingKey, event);
 
 		return Optional.of(savedOrder);
 	}
