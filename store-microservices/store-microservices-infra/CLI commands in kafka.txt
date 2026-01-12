@@ -1,0 +1,33 @@
+// Execute bash command in the kafka container assign an interactive terminal to the bash process
+docker exec -it kafka bash
+
+// Use kafka-topics tool to create a new topic with the configurations provided
+kafka-topics --create --topic my-topic --bootstrap-server localhost:9092 --partitions 3 --replication-factor 1
+
+// Use kafka-topics tool to list topics on the kafka server specified
+kafka-topics --list --bootstrap-server localhost:9092
+
+// Use kafka-topics tool to create a new topic with the configurations provided
+kafka-topics --create --topic new-topic --bootstrap-server localhost:9092 --partitions 2 --replication-factor 1
+
+// Use kafka-topics tool to describe a topic on the kafka server specified
+kafka-topics --describe --topic my-topic --bootstrap-server localhost:9092
+
+// A live producer input mode. Everything entered in input becomes a message
+kafka-console-producer --topic my-topic --bootstrap-server localhost:9092
+
+// A live consumer that reads from the topic and starts from the beginning
+kafka-console-consumer --topic my-topic --bootstrap-server localhost:9092 --from-beginning
+
+// A live consumer that reads from the topic and starts from the beginning. The consumer is assigned to a group and so kafka divides messages between consumers in the same group based on partitions
+kafka-console-consumer --topic my-topic --bootstrap-server localhost:9092 --group my-group --from-beginning
+
+// A live producer input mode. Everything entered in input becomes a message. Sets the option to parse keys
+// E.g if you input "user33:Hello" kafka parses what's before the colon as a key and assigns a partition for that key.
+// Every key is given a partition and so subsequent messages with that key go to the assigned partition
+// By using keying, now we can have different messages going to different partitions unlike the default where they just go to 1 default partition
+// You can find multiple keys assigned to the same partition based on how the keys are hashed
+kafka-console-producer --topic my-topic --bootstrap-server localhost:9092 --property "parse.key=true" --property "key.separator=:"
+
+// Use tool to describe a group
+kafka-consumer-groups --bootstrap-server localhost:9092 --describe --group my-group
