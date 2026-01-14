@@ -21,13 +21,25 @@ spring:
         virtual-host: ${RABBITMQ_VHOST:guest}
         connection-timeout: 30000
 
-rabbitmq:
-    exchange:
-        name: order.exchange
-    queue:
-        name: order.queue
-    routing:
-        key: order.tracking
+    cloud:
+        stream:
+            bindings:
+                createOrder-out-0:
+                    destination: order.exchange
+                    content-type: application/json
+            rabbit:
+                bindings:
+                    createOrder-out-0:
+                        producer:
+                            routing-key-expression: "'order.tracking'"
+
+#rabbitmq:
+#    exchange:
+#        name: order.exchange
+#    queue:
+#        name: order.queue
+#    routing:
+#        key: order.tracking
 
     jpa:
         database: POSTGRESQL

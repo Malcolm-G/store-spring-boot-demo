@@ -4,8 +4,7 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.amqp.rabbit.core.RabbitTemplate;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.stream.function.StreamBridge;
 import org.springframework.stereotype.Service;
 
 import com.malcolm.order.dto.OrderCreatedEvent;
@@ -24,11 +23,14 @@ public class OrderService {
 
 	private final OrderRepository orderRepository;
 	private final CartService cartService;
-	private final RabbitTemplate rabbitTemplate;
-	@Value("${rabbitmq.exchange.name}")
-	private String exchangeName;
-	@Value("${rabbitmq.routing.key}")
-	private String routingKey;
+	/*
+	 * private final RabbitTemplate rabbitTemplate;
+	 * 
+	 * @Value("${rabbitmq.exchange.name}") private String exchangeName;
+	 * 
+	 * @Value("${rabbitmq.routing.key}") private String routingKey;
+	 */
+	private final StreamBridge streamBridge;
 	private final OrderItemMapper orderItemMapper;
 
 //	@Autowired
@@ -71,7 +73,8 @@ public class OrderService {
 				savedOrder.getStatus(), savedOrder.getOrderItems().stream().map(item -> {
 					return orderItemMapper.toDto(item);
 				}).toList(), savedOrder.getTotalAmount(), savedOrder.getCreatedAt());
-		rabbitTemplate.convertAndSend(exchangeName, routingKey, event);
+//		rabbitTemplate.convertAndSend(exchangeName, routingKey, event);
+		streamBridge.send("createOrder-out-0", event);
 
 		return Optional.of(savedOrder);
 	}
