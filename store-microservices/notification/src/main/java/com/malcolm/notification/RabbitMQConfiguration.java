@@ -15,6 +15,10 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+/**
+ * After transitioning to spring cloud streams you don't really need the config
+ * but it is still used when you still need more fine-tuned control
+ */
 @Configuration
 public class RabbitMQConfiguration {
 
