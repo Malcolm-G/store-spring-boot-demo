@@ -1,0 +1,16 @@
+spring:
+    application:
+        name: auth-code-flow
+    security:
+        oauth2:
+            client:
+                registration:
+                    oauth2-authorization-code-flow:
+                        client-id: oauth2-authorization-code-flow
+                        client-secret: 9SkfaplCV27ReJ2fIB4zrRdeI1MeL8IA
+                        scope: openid, profile, roles, email
+                        authorization-grant-type: authorization_code
+                        redirect-uri: http://localhost:8080/login/oauth2/code/oauth2-authorization-code-flow
+                provider:
+                    oauth2-authorization-code-flow:
+                        issuer-uri: http://127.0.0.1:8443/realms/oauth2-demos
