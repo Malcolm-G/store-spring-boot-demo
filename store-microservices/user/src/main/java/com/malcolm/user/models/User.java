@@ -19,6 +19,7 @@ public class User {
 	@Id
 	private String id; // MongoDb stores IDs as ObjectId type which can't convert to Long so we convert
 						// to String
+	private String keycloakId;
 	private String firstName;
 	private String lastName;
 
