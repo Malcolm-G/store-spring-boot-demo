@@ -32,6 +32,7 @@ public class UserService {
 		String keycloakUserId = keyCloakAdminService.createUser(token, userRequest);
 		User user = userMapper.toUser(userRequest);
 		user.setKeycloakId(keycloakUserId);
+		keyCloakAdminService.assignRealmRoleToUser(userRequest.getUsername(), "USER", keycloakUserId);
 		return userRepository.save(user);
 	}
 

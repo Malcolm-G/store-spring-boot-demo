@@ -8,6 +8,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -31,6 +32,8 @@ public class KeycloakAdminService {
 	private String realm;
 	@Value("${keycloak.admin.client-id}")
 	private String clientId;
+	@Value("${keycloak.admin.client-uid}")
+    private String clientUid;
 
 	private RestTemplate restTemplate = new RestTemplate();
 
@@ -88,6 +91,40 @@ public class KeycloakAdminService {
 
 		String path = location.getPath();
 		return path.substring(path.lastIndexOf("/") + 1);
+	}
+
+	@SuppressWarnings("unchecked")
+	private Map<String, Object> getRealmRoleRepresentation(String token, String roleName) {
+		HttpHeaders headers = new HttpHeaders();
+		headers.setBearerAuth(token);
+
+		HttpEntity<Void> entity = new HttpEntity<>(headers);
+		String url = keycloakServerUrl + "/admin/realms/" + realm + "/clients/" + clientUid + "/roles/" + roleName;
+		@SuppressWarnings("rawtypes")
+		ResponseEntity<Map> response = restTemplate.exchange(url, HttpMethod.GET, entity, Map.class);
+
+		return response.getBody();
+	}
+
+	public void assignRealmRoleToUser(String username, String roleName, String userId) {
+		String token = getAdminAccessToken();
+		Map<String, Object> roleRep = getRealmRoleRepresentation(token, roleName);
+
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_JSON);
+		headers.setBearerAuth(token);
+
+		HttpEntity<List<Map<String, Object>>> entity = new HttpEntity<>(List.of(roleRep), headers);
+
+		String url = keycloakServerUrl + "/admin/realms/" + realm + "/users/" + userId + "/role-mappings/clients/"
+				+ clientUid;
+
+		ResponseEntity<Void> response = restTemplate.postForEntity(url, entity, Void.class);
+
+		if (!response.getStatusCode().is2xxSuccessful()) {
+			throw new RuntimeException("Failed to assign role " + roleName + " to user " + username + ": HTTP "
+					+ response.getStatusCode());
+		}
 	}
 
 }

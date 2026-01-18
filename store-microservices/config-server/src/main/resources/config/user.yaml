@@ -68,9 +68,10 @@ keycloak:
     admin:
         username: user
         password: user
-        server-url: http://localhost:8443
+        server-url: http://127.0.0.1:8443
         realm: store
         client-id: admin-cli
+        client-uid: a4d2d2c8-ac5c-45d0-94dc-7033027a5925
 
 server:
     port: 8082
