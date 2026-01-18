@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -23,14 +22,17 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class UserService {
 
-	@Autowired
-	private ObjectMapper objectMapper;
+	private final ObjectMapper objectMapper;
 	private final UserRepository userRepository;
-	@Autowired
-	private UserMapper userMapper;
+	private final KeycloakAdminService keyCloakAdminService;
+	private final UserMapper userMapper;
 
 	public User createUser(UserRequest userRequest) {
-		return userRepository.save(userMapper.toUser(userRequest));
+		String token = keyCloakAdminService.getAdminAccessToken();
+		String keycloakUserId = keyCloakAdminService.createUser(token, userRequest);
+		User user = userMapper.toUser(userRequest);
+		user.setKeycloakId(keycloakUserId);
+		return userRepository.save(user);
 	}
 
 	public List<UserResponse> fetchAllUsers() {

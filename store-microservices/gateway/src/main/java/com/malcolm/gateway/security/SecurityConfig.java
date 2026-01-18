@@ -23,11 +23,13 @@ public class SecurityConfig {
 
 	@Bean
 	SecurityWebFilterChain filterChain(ServerHttpSecurity http) throws Exception {
-		http.csrf(csrf -> csrf.disable())
-				.authorizeExchange(exchange -> exchange.pathMatchers("/api/products/**").hasRole("PRODUCT")
-						.pathMatchers("/api/orders/**").hasRole("ORDER").pathMatchers("/api/users/**").hasRole("USER")
-						.anyExchange().authenticated())
-				.oauth2ResourceServer(
+		http.csrf(csrf -> csrf.disable()).authorizeExchange(exchange -> exchange
+				/*
+				 * .pathMatchers("/api/products/**").hasRole("PRODUCT")
+				 * .pathMatchers("/api/orders/**").hasRole("ORDER").pathMatchers("/api/users/**"
+				 * ).hasRole("USER")
+				 */
+				.anyExchange().authenticated()).oauth2ResourceServer(
 						oauth2 -> oauth2.jwt(jwt -> jwt.jwtAuthenticationConverter(grantedAuthoritiesConverter())));
 		return http.build();
 	}

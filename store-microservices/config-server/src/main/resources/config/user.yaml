@@ -64,5 +64,13 @@ logging:
             max-file-size: 5MB
             max-history: 7
 
+keycloak:
+    admin:
+        username: user
+        password: user
+        server-url: http://localhost:8443
+        realm: store
+        client-id: admin-cli
+
 server:
     port: 8082
