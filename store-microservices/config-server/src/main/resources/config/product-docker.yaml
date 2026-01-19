@@ -1,0 +1,67 @@
+spring:
+    #    h2:
+    #        console:
+    #            enabled: true
+    #    datasource:
+    #        url: jdbc:h2:mem:test
+    #    jpa:
+    #        show-sql: true
+    #        hibernate:
+    #            ddl-auto: create
+    datasource:
+        url: jdbc:postgresql://ep-fragrant-bar-agynj9nb-pooler.c-2.eu-central-1.aws.neon.tech/product?sslmode=require&channelBinding=require
+        username: ${POSTGRESQL_USER}
+        password: ${POSTGRESQL_PASSWORD}
+
+    jpa:
+        database: POSTGRESQL
+        show-sql: true
+        hibernate:
+            ddl-auto: update
+        database-platform: org.hibernate.dialect.PostgreSQLDialect
+        properties:
+            hibernate:
+                format_sql: true
+
+    rabbitmq:
+        host: ${RABBITMQ_HOST:rabbitmq_container}
+        port: ${RABBITMQ_PORT:5672}
+        username: ${RABBITMQ_USERNAME:guest}
+        password: ${RABBITMQ_PASSWORD:guest}
+        virtual-host: ${RABBITMQ_VHOST:guest}
+        connection-timeout: 30000
+
+eureka:
+    instance:
+        prefer-ip-address: true # When this service tries to make a call to a service registered on eureka, it will use the IP address stored on Eureka instead of the hostname.
+    client:
+        service-url:
+            default-zone: http://eureka/eureka
+        register-with-eureka: true
+        fetch-registry: true
+
+management:
+    endpoints:
+        web:
+            exposure:
+                include: "*"
+    endpoint:
+        shutdown:
+            access: unrestricted
+    tracing:
+        sampling:
+            probability: 1.0
+
+logging:
+    level:
+        root: INFO
+        com.malcolm.user: INFO
+    file:
+        name: ../logs/${spring.application.name}.log
+    logback:
+        rollingpolicy:
+            max-file-size: 5MB
+            max-history: 7
+
+server:
+    port: 8081

@@ -1,0 +1,77 @@
+spring:
+    #    h2:
+    #        console:
+    #            enabled: true
+    #    datasource:
+    #        url: jdbc:h2:mem:test
+    #    jpa:
+    #        show-sql: true
+    #        hibernate:
+    #            ddl-auto: create
+    #    datasource:
+    #        url: jdbc:postgresql://localhost:5432/userdb
+    #        username: malcolm
+    #        password: malcolm
+    #
+    #    jpa:
+    #        database: POSTGRESQL
+    #        show-sql: true
+    #        hibernate:
+    #            ddl-auto: create
+    #        database-platform: org.hibernate.dialect.PostgreSQLDialect
+    data:
+        mongodb:
+            uri: ${MONGODB_URI:?MONGODB_URI is required}
+            database: userdb
+
+    rabbitmq:
+        host: ${RABBITMQ_HOST:rabbitmq_container}
+        port: ${RABBITMQ_PORT:5672}
+        username: ${RABBITMQ_USERNAME:guest}
+        password: ${RABBITMQ_PASSWORD:guest}
+        virtual-host: ${RABBITMQ_VHOST:guest}
+        connection-timeout: 30000
+
+eureka:
+    instance:
+        prefer-ip-address: true # When this service tries to make a call to a service registered on eureka, it will use the IP address stored on Eureka instead of the hostname.
+    client:
+        service-url:
+            default-zone: http://eureka:8761/eureka
+        register-with-eureka: true
+        fetch-registry: true
+
+management:
+    endpoints:
+        web:
+            exposure:
+                include: "*"
+    endpoint:
+        shutdown:
+            access: unrestricted
+    tracing:
+        sampling:
+            probability: 1.0
+
+logging:
+    level:
+        root: INFO
+        com.malcolm.user: INFO
+    file:
+        name: ../logs/${spring.application.name}.log
+    logback:
+        rollingpolicy:
+            max-file-size: 5MB
+            max-history: 7
+
+keycloak:
+    admin:
+        username: user
+        password: user
+        server-url: http://keycloak:8443
+        realm: store
+        client-id: admin-cli
+        client-uid: a4d2d2c8-ac5c-45d0-94dc-7033027a5925
+
+server:
+    port: 8082

@@ -1,0 +1,33 @@
+spring:
+    application:
+        name: config-server
+    profiles:
+        active: native ## Specify profile because by default it tries to use git
+    cloud:
+        config:
+            server:
+                native:
+                    search-locations: classpath:/config ##May not dynamically update on refreshes since the classes are bundled on initial startup. Youcan also use file as shown below
+                    #search-locations: file:///C:\Users\malco\OneDrive\Desktop\Coding\java\store\config-server\src\main\resources\config
+    rabbitmq:
+        host: ${RABBITMQ_HOST:localhost}
+        port: ${RABBITMQ_PORT:5672}
+        username: ${RABBITMQ_USERNAME:guest}
+        password: ${RABBITMQ_PASSWORD:guest}
+        virtual-host: ${RABBITMQ_VHOST:guest}
+        connection-timeout: 30000
+
+management:
+    endpoints:
+        web:
+            exposure:
+                include: "*"
+
+server:
+    port: 8888
+
+#encrypt:
+#    key-store:
+#        location: config-server.jks
+#        password: mypass
+#        alias: config-server-key
