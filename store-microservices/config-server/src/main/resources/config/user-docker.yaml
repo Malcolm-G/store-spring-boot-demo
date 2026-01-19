@@ -25,7 +25,7 @@ spring:
             database: userdb
 
     rabbitmq:
-        host: ${RABBITMQ_HOST:rabbitmq_container}
+        host: ${RABBITMQ_HOST:rabbitmq}
         port: ${RABBITMQ_PORT:5672}
         username: ${RABBITMQ_USERNAME:guest}
         password: ${RABBITMQ_PASSWORD:guest}
