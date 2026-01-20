@@ -33,7 +33,6 @@ public class OrderService {
 	private final StreamBridge streamBridge;
 	private final OrderItemMapper orderItemMapper;
 
-//	@Autowired
 //	private final UserRepository userRepository;
 
 	public Optional<Order> createOrder(String userId) {

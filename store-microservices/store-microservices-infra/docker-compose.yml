@@ -8,6 +8,7 @@ services:
             PGDATA: /data/postgres
         volumes:
             - postgres:/data/postgres
+            - ./init-multi-db.sql:/docker-entrypoint-initdb.d/init.sql # To create multiple DBs at startup
         ports:
             - "5432:5432"
         networks:
@@ -107,16 +108,184 @@ services:
         ports:
             - 8888:8888
         environment: # Docker will pick the environment variables from the .env file
-            #- SPRING_CLOUD_CONFIG_SERVER_NATIVE_SEARCH_LOCATIONS=/config (Incase the volume mapping doesn't work)
+            - SPRING_CLOUD_CONFIG_SERVER_NATIVE_SEARCH-LOCATIONS=/config # (Incase the volume mapping doesn't work)
             - RABBITMQ_HOST=${RABBITMQ_HOST}
             - RABBITMQ_PORT=${RABBITMQ_PORT}
             - RABBITMQ_USERNAME=${RABBITMQ_USERNAME}
             - RABBITMQ_PASSWORD=${RABBITMQ_PASSWORD}
             - RABBITMQ_VHOST=${RABBITMQ_VHOST}
         volumes:
-            - ../config-server/src/main/resources/config:/config
+            - ./../config-server/src/main/resources/config:/config
         networks:
             - backend
+        healthcheck:
+            test:
+                [
+                    "CMD",
+                    "wget",
+                    "--spider",
+                    "http://localhost:8888/actuator/health",
+                ]
+            interval: 30s
+            timeout: 10s
+            retries: 5
+
+    eureka:
+        build: ../eureka
+        container_name: eureka
+        ports:
+            - 8761:8761
+        networks:
+            - backend
+        healthcheck:
+            test:
+                [
+                    "CMD",
+                    "wget",
+                    "--spider",
+                    "http://localhost:8761/actuator/health",
+                ]
+            interval: 30s
+            timeout: 10s
+            retries: 5
+
+    gateway:
+        build: ../gateway
+        container_name: gateway
+        ports:
+            - 8080:8080
+        environment:
+            - SPRING_PROFILES_ACTIVE=docker
+        networks:
+            - backend
+        healthcheck:
+            test:
+                [
+                    "CMD",
+                    "wget",
+                    "--spider",
+                    "http://localhost:8080/actuator/health",
+                ]
+            interval: 30s
+            timeout: 10s
+            retries: 5
+        depends_on:
+            - config-server
+            - eureka
+            - keycloak
+
+    user:
+        build: ../user
+        container_name: user
+        ports:
+            - 8082:8082
+        environment:
+            - SPRING_PROFILES_ACTIVE=docker
+        env_file:
+            - ../user/docker.env
+        networks:
+            - backend
+        healthcheck:
+            test:
+                [
+                    "CMD",
+                    "wget",
+                    "--spider",
+                    "http://localhost:8082/actuator/health",
+                ]
+            interval: 30s
+            timeout: 10s
+            retries: 5
+        depends_on:
+            config-server:
+                condition: service_healthy
+            eureka:
+                condition: service_healthy
+            keycloak:
+                condition: service_started
+
+    product:
+        build: ../product
+        container_name: product
+        ports:
+            - 8081:8081
+        environment:
+            - SPRING_PROFILES_ACTIVE=docker
+        env_file:
+            - ../product/docker.env
+        networks:
+            - backend
+        healthcheck:
+            test:
+                [
+                    "CMD",
+                    "wget",
+                    "--spider",
+                    "http://localhost:8081/actuator/health",
+                ]
+            interval: 30s
+            timeout: 10s
+            retries: 5
+        depends_on:
+            - config-server
+            - eureka
+            - keycloak
+
+    order:
+        build: ../order
+        container_name: order
+        ports:
+            - 8083:8083
+        environment:
+            - SPRING_PROFILES_ACTIVE=docker
+        env_file:
+            - ../order/docker.env
+        networks:
+            - backend
+        healthcheck:
+            test:
+                [
+                    "CMD",
+                    "wget",
+                    "--spider",
+                    "http://localhost:8083/actuator/health",
+                ]
+            interval: 30s
+            timeout: 10s
+            retries: 5
+        depends_on:
+            - config-server
+            - eureka
+            - keycloak
+
+    notification:
+        build: ../notification
+        container_name: notification
+        ports:
+            - 8084:8084
+        environment:
+            - SPRING_PROFILES_ACTIVE=docker
+        env_file:
+            - ../notification/docker.env
+        networks:
+            - backend
+        healthcheck:
+            test:
+                [
+                    "CMD",
+                    "wget",
+                    "--spider",
+                    "http://localhost:8084/actuator/health",
+                ]
+            interval: 30s
+            timeout: 10s
+            retries: 5
+        depends_on:
+            - config-server
+            - eureka
+            - keycloak
+            - kafka
+
 networks:
     backend:
         driver: bridge
