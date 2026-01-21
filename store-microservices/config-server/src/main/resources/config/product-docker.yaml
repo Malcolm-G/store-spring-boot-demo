@@ -35,8 +35,8 @@ eureka:
     instance:
         prefer-ip-address: true # When this service tries to make a call to a service registered on eureka, it will use the IP address stored on Eureka instead of the hostname.
     client:
-        service-url:
-            default-zone: http://eureka/eureka
+        serviceUrl:
+            defaultZone: http://eureka:8761/eureka/
         register-with-eureka: true
         fetch-registry: true
 
