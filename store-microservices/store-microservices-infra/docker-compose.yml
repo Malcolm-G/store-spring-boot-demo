@@ -2,6 +2,7 @@ services:
     postgres:
         container_name: postgres_container
         image: postgres:14
+        mem_limit: 700m
         environment:
             POSTGRES_USER: malcolm
             POSTGRES_PASSWORD: malcolm
@@ -17,6 +18,7 @@ services:
     pgadmin:
         container_name: pgadmin_container
         image: dpage/pgadmin4
+        mem_limit: 700m
         environment:
             PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-malcolm@mail.com}
             PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD:-malcolm}
