@@ -105,7 +105,8 @@ services:
     #            - backend
 
     config-server:
-        build: ../config-server
+        #        build: ../config-server
+        image: store/config-server
         container_name: config-server
         ports:
             - 8888:8888
@@ -133,7 +134,8 @@ services:
             retries: 5
 
     eureka:
-        build: ../eureka
+        #        build: ../eureka
+        image: store/eureka
         container_name: eureka
         ports:
             - 8761:8761
@@ -152,7 +154,8 @@ services:
             retries: 5
 
     gateway:
-        build: ../gateway
+        #        build: ../gateway
+        image: store/gateway
         container_name: gateway
         ports:
             - 8080:8080
@@ -180,7 +183,8 @@ services:
                 condition: service_started
 
     user:
-        build: ../user
+        #        build: ../user
+        image: store/user
         container_name: user
         ports:
             - 8082:8082
@@ -210,7 +214,8 @@ services:
                 condition: service_started
 
     product:
-        build: ../product
+        #        build: ../product
+        image: store/product
         container_name: product
         ports:
             - 8081:8081
@@ -240,7 +245,8 @@ services:
                 condition: service_started
 
     order:
-        build: ../order
+        #        build: ../order
+        image: store/order
         container_name: order
         ports:
             - 8083:8083
@@ -270,7 +276,8 @@ services:
                 condition: service_started
 
     notification:
-        build: ../notification
+        #        build: ../notification
+        image: store/notification
         container_name: notification
         ports:
             - 8084:8084

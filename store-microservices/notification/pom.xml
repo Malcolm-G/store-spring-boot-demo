@@ -120,6 +120,9 @@
                             <artifactId>lombok</artifactId>
                         </exclude>
                     </excludes>
+                    <image>
+                        <name>store/notification</name>
+                    </image>
                 </configuration>
             </plugin>
         </plugins>
