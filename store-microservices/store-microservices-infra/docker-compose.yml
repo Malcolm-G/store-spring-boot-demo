@@ -170,9 +170,12 @@ services:
             timeout: 10s
             retries: 5
         depends_on:
-            - config-server
-            - eureka
-            - keycloak
+            config-server:
+                condition: service_healthy
+            eureka:
+                condition: service_healthy
+            keycloak:
+                condition: service_started
 
     user:
         build: ../user
@@ -227,9 +230,12 @@ services:
             timeout: 10s
             retries: 5
         depends_on:
-            - config-server
-            - eureka
-            - keycloak
+            config-server:
+                condition: service_healthy
+            eureka:
+                condition: service_healthy
+            keycloak:
+                condition: service_started
 
     order:
         build: ../order
@@ -254,9 +260,12 @@ services:
             timeout: 10s
             retries: 5
         depends_on:
-            - config-server
-            - eureka
-            - keycloak
+            config-server:
+                condition: service_healthy
+            eureka:
+                condition: service_healthy
+            keycloak:
+                condition: service_started
 
     notification:
         build: ../notification
@@ -281,10 +290,14 @@ services:
             timeout: 10s
             retries: 5
         depends_on:
-            - config-server
-            - eureka
-            - keycloak
-            - kafka
+            config-server:
+                condition: service_healthy
+            eureka:
+                condition: service_healthy
+            keycloak:
+                condition: service_started
+            kafka:
+                condition: service_started
 
 networks:
     backend:
