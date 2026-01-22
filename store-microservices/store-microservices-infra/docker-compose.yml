@@ -97,14 +97,6 @@ services:
             - backend
         restart: unless-stopped
 
-    #    zipkin:
-    #        container_name: zipkin
-    #        image: openzipkin/zipkin
-    #        ports:
-    #            - 9411:9411
-    #        networks:
-    #            - backend
-
     config-server:
         #        build: ../config-server
         image: store/config-server
@@ -162,6 +154,8 @@ services:
             - 8080:8080
         environment:
             - SPRING_PROFILES_ACTIVE=docker
+        env_file:
+            - ../gateway/docker.env
         networks:
             - backend
         healthcheck:
@@ -177,9 +171,9 @@ services:
             retries: 5
         depends_on:
             config-server:
-                condition: service_healthy
+                condition: service_started
             eureka:
-                condition: service_healthy
+                condition: service_started
             keycloak:
                 condition: service_started
 
@@ -208,11 +202,12 @@ services:
             retries: 5
         depends_on:
             config-server:
-                condition: service_healthy
+                condition: service_started
             eureka:
-                condition: service_healthy
+                condition: service_started
             keycloak:
                 condition: service_started
+        restart: on-failure
 
     product:
         #        build: ../product
@@ -239,11 +234,12 @@ services:
             retries: 5
         depends_on:
             config-server:
-                condition: service_healthy
+                condition: service_started
             eureka:
-                condition: service_healthy
+                condition: service_started
             keycloak:
                 condition: service_started
+        restart: on-failure
 
     order:
         #        build: ../order
@@ -270,11 +266,12 @@ services:
             retries: 5
         depends_on:
             config-server:
-                condition: service_healthy
+                condition: service_started
             eureka:
-                condition: service_healthy
+                condition: service_started
             keycloak:
                 condition: service_started
+        restart: on-failure
 
     notification:
         #        build: ../notification
@@ -301,13 +298,14 @@ services:
             retries: 5
         depends_on:
             config-server:
-                condition: service_healthy
+                condition: service_started
             eureka:
-                condition: service_healthy
+                condition: service_started
             keycloak:
                 condition: service_started
             kafka:
                 condition: service_started
+        restart: on-failure
 
     read:
         image: grafana/loki:latest
@@ -538,6 +536,7 @@ services:
         ports:
             - 9411:9411
         networks:
+            - backend
             - loki
 
     flog:
