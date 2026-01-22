@@ -176,6 +176,40 @@
                     </image>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>com.google.cloud.tools</groupId>
+                <artifactId>jib-maven-plugin</artifactId>
+                <version>3.5.1</version>
+                <configuration>
+                    <from>
+                        <image>gcr.io/distroless/java25</image>
+                    </from>
+                    <to>
+                        <image>malcolmgx/order</image>
+                        <auth>
+                            <username>${env.DOCKER_USERNAME}</username>
+                            <password>${env.DOCKER_PASSWORD}</password>
+                        </auth>
+                    </to>
+                    <!--Found the below config from https://medium.com/@slatecoder/everything-you-need-to-know-about-maven-jib-plugin-9ebe051fa27b-->
+                    <!--<container>
+                        <jvmFlags>
+                            <jvmFlag>-Xms512m</jvmFlag>
+                            <jvmFlag>-Xmx1024m</jvmFlag>
+                            <jvmFlag>-Dspring.profiles.active=prod</jvmFlag>
+                        </jvmFlags>
+                        <ports>
+                            <port>8080</port>
+                            <port>8443</port>
+                        </ports>
+                        <environment>
+                            <API_KEY>your-api-key</API_KEY>
+                            <DB_HOST>database-hostname</DB_HOST>
+                        </environment>
+                        <workingDirectory>/app</workingDirectory>
+                    </container>-->
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 

@@ -100,6 +100,7 @@ services:
     config-server:
         #        build: ../config-server
         image: store/config-server
+        #        image: malcolmgx/config-server # If you want to use the image built with jib
         container_name: config-server
         ports:
             - 8888:8888
@@ -129,6 +130,7 @@ services:
     eureka:
         #        build: ../eureka
         image: store/eureka
+        #        image: malcolmgx/eureka # If you want to use the image built with jib
         container_name: eureka
         ports:
             - 8761:8761
@@ -149,6 +151,7 @@ services:
     gateway:
         #        build: ../gateway
         image: store/gateway
+        #        image: malcolmgx/gateway # If you want to use the image built with jib
         container_name: gateway
         ports:
             - 8080:8080
@@ -180,6 +183,7 @@ services:
     user:
         #        build: ../user
         image: store/user
+        #        image: malcolmgx/user # If you want to use the image built with jib
         container_name: user
         ports:
             - 8082:8082
@@ -212,6 +216,7 @@ services:
     product:
         #        build: ../product
         image: store/product
+        #        image: malcolmgx/product # If you want to use the image built with jib
         container_name: product
         ports:
             - 8081:8081
@@ -244,6 +249,7 @@ services:
     order:
         #        build: ../order
         image: store/order
+        #        image: malcolmgx/order # If you want to use the image built with jib
         container_name: order
         ports:
             - 8083:8083
@@ -276,6 +282,7 @@ services:
     notification:
         #        build: ../notification
         image: store/notification
+        #        image: malcolmgx/notification # If you want to use the image built with jib
         container_name: notification
         ports:
             - 8084:8084
