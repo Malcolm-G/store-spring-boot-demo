@@ -1,0 +1,2521 @@
+{
+  "info": {
+    "_postman_id": "12e5bdf9-8761-4c07-b623-a8502d9154bf",
+    "name": "Store - Microservices",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Users",
+      "item": [
+        {
+          "name": "Create User",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "id": "849ae4d1-309a-42d7-814d-e99cfc8abb1a",
+                "exec": [
+                  "pm.test(\"Successful POST request\", function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+                  "});",
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "id": "c840655a-b45f-4375-85e2-d985004fc241",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"firstName\": \"Malcolm\",\n    \"lastName\": \"Githuka\",\n    \"email\": \"malcolm@example.com\",\n    \"phone\": \"+254712345678\",\n    \"address\": {\n        \"street\": \"12 Riverside Lane\",\n        \"city\": \"Nairobi\",\n        \"state\": \"Nairobi County\",\n        \"country\": \"Kenya\",\n        \"zipcode\": \"00100\"\n    }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{userURL}}/api/users",
+              "host": [
+                "{{userURL}}"
+              ],
+              "path": [
+                "api",
+                "users"
+              ]
+            },
+            "description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
+          },
+          "response": []
+        },
+        {
+          "name": "Get All Users",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "id": "ae4ae6f9-c9a2-4e3c-99f6-f60ff873029a",
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "id": "2ad3bb4b-7af5-4689-9bea-6c1e2fb99cb4",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{userURL}}/api/users",
+              "host": [
+                "{{userURL}}"
+              ],
+              "path": [
+                "api",
+                "users"
+              ]
+            },
+            "description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
+          },
+          "response": []
+        },
+        {
+          "name": "Get User by ID",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "id": "ae4ae6f9-c9a2-4e3c-99f6-f60ff873029a",
+                "exec": [
+                  "// Visualization Script",
+                  "// Visualization Script",
+                  "const template = `",
+                  "<div style=\"max-width: 400px; margin: 2em auto; padding: 1.5em; border-radius: 8px; background: #f7f7f9; box-shadow: 0 2px 8px rgba(0,0,0,0.07); font-family: Arial, sans-serif;\">",
+                  "  <h3 style=\"margin-top: 0; color: #2d3a4b;\">User Details</h3>",
+                  "  <table style=\"width: 100%; border-collapse: collapse;\">",
+                  "    <tr>",
+                  "      <td style=\"font-weight: bold; padding: 0.5em 0; color: #555;\">ID</td>",
+                  "      <td style=\"padding: 0.5em 0;\">{{user.id}}</td>",
+                  "    </tr>",
+                  "    <tr>",
+                  "      <td style=\"font-weight: bold; padding: 0.5em 0; color: #555;\">Name</td>",
+                  "      <td style=\"padding: 0.5em 0;\">{{user.name}}</td>",
+                  "    </tr>",
+                  "    <tr>",
+                  "      <td style=\"font-weight: bold; padding: 0.5em 0; color: #555;\">Email</td>",
+                  "      <td style=\"padding: 0.5em 0;\">{{user.email}}</td>",
+                  "    </tr>",
+                  "  </table>",
+                  "</div>`;",
+                  "",
+                  "function createPayload() {",
+                  "    let user = {};",
+                  "    try {",
+                  "        user = pm.response.json();",
+                  "    } catch (e) {",
+                  "        user = { id: 'N/A', name: 'N/A', email: 'N/A' };",
+                  "    }",
+                  "    return { user };",
+                  "}",
+                  "",
+                  "pm.visualizer.set(template, createPayload());"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            },
+            {
+              "listen": "prerequest",
+              "script": {
+                "id": "47343e40-0c42-4b7b-b63c-3f8a44cdb8fb",
+                "exec": [
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "id": "ed2b00f3-ac61-431d-9dd8-e7f6c406e0e0",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{userURL}}/api/users/1",
+              "host": [
+                "{{userURL}}"
+              ],
+              "path": [
+                "api",
+                "users",
+                "1"
+              ]
+            },
+            "description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
+          },
+          "response": []
+        },
+        {
+          "name": "Update User by ID",
+          "id": "a42c9164-f681-4d80-aaf8-b16b8e0c0acc",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n\t\"firstName\": \"Malcolm\",\r\n    \"lastName\": \"X\",\r\n    \"email\": \"malcolm.githuka@gmail.com\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{userURL}}/api/users/694676be92d3ee3eb58d87d6",
+              "host": [
+                "{{userURL}}"
+              ],
+              "path": [
+                "api",
+                "users",
+                "694676be92d3ee3eb58d87d6"
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "id": "cdd70b46-3b98-41fa-b137-e2cb033fed9d"
+    },
+    {
+      "name": "Products",
+      "item": [
+        {
+          "name": "Get All Products",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "id": "ae4ae6f9-c9a2-4e3c-99f6-f60ff873029a",
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "id": "b8a40cde-5048-41bc-b981-2a4974460053",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{productURL}}/api/products",
+              "host": [
+                "{{productURL}}"
+              ],
+              "path": [
+                "api",
+                "products"
+              ]
+            },
+            "description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
+          },
+          "response": []
+        },
+        {
+          "name": "Get Products By Id",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "id": "ae4ae6f9-c9a2-4e3c-99f6-f60ff873029a",
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "id": "0a10fa9a-d679-4da1-8e21-9f9c70f1831d",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{productURL}}/api/products/1",
+              "host": [
+                "{{productURL}}"
+              ],
+              "path": [
+                "api",
+                "products",
+                "1"
+              ]
+            },
+            "description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
+          },
+          "response": []
+        },
+        {
+          "name": "Get All Active Products",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "id": "ae4ae6f9-c9a2-4e3c-99f6-f60ff873029a",
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "id": "676c45bf-f84e-4eb1-8ade-c672749a3450",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{productURL}}/api/products/active",
+              "host": [
+                "{{productURL}}"
+              ],
+              "path": [
+                "api",
+                "products",
+                "active"
+              ]
+            },
+            "description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
+          },
+          "response": []
+        },
+        {
+          "name": "Update Product by ID",
+          "id": "a25feeb8-97c0-4e2b-968c-d51a38f74676",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n\t\"firstName\": \"Malcolm\",\r\n    \"lastName\": \"X\",\r\n    \"email\": \"malcolm.githuka@gmail.com\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{productURL}}/api/products/1",
+              "host": [
+                "{{productURL}}"
+              ],
+              "path": [
+                "api",
+                "products",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Products",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "id": "849ae4d1-309a-42d7-814d-e99cfc8abb1a",
+                "exec": [
+                  "pm.test(\"Successful POST request\", function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+                  "});",
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "id": "4e21559b-820f-47e6-8048-a8528c9a254c",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"name\": \"Wireless Mouse\",\n    \"description\": \"A high-precision wireless mouse with ergonomic design.\",\n    \"price\": 29.99,\n    \"stockQuantity\": 150,\n    \"category\": \"Electronics\",\n    \"imageUrl\": \"https://example.com/images/wireless-mouse.jpg\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{productURL}}/api/products",
+              "host": [
+                "{{productURL}}"
+              ],
+              "path": [
+                "api",
+                "products"
+              ]
+            },
+            "description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Product",
+          "id": "e8cc5c2a-b020-4724-83c6-2a388cdb051d",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{productURL}}/api/products/1",
+              "host": [
+                "{{productURL}}"
+              ],
+              "path": [
+                "api",
+                "products",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Search Products",
+          "id": "66ff51ad-8454-435a-bf52-4f547a91c433",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{productURL}}/api/products/search?keyword=W",
+              "host": [
+                "{{productURL}}"
+              ],
+              "path": [
+                "api",
+                "products",
+                "search"
+              ],
+              "query": [
+                {
+                  "key": "keyword",
+                  "value": "W"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "id": "8deff0cc-5470-49e9-bf60-17e770ffcbb3"
+    },
+    {
+      "name": "Cart",
+      "item": [
+        {
+          "name": "Add to Cart",
+          "id": "8e4b63d5-021c-45c3-a36a-2aa094a7321d",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-User-ID",
+                "value": "694689adaecf23a763f15a12",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"productId\": 1,\r\n    \"quantity\": 10\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{orderURL}}/api/cart",
+              "host": [
+                "{{orderURL}}"
+              ],
+              "path": [
+                "api",
+                "cart"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete from Cart",
+          "id": "44ccb00b-268b-428f-8666-dcb6ae6b7cb1",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "x-user-id",
+                "value": "1",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "url": {
+              "raw": "{{orderURL}}/api/cart/items/1",
+              "host": [
+                "{{orderURL}}"
+              ],
+              "path": [
+                "api",
+                "cart",
+                "items",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get User Cart",
+          "id": "ce204b3f-3462-4451-bc99-169c8b6a1f7f",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "x-user-id",
+                "value": "694689adaecf23a763f15a12",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "url": {
+              "raw": "{{orderURL}}/api/cart",
+              "host": [
+                "{{orderURL}}"
+              ],
+              "path": [
+                "api",
+                "cart"
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "id": "276d8f5b-7c2c-4b5b-b0f0-ee9e783e4db4"
+    },
+    {
+      "name": "Order",
+      "item": [
+        {
+          "name": "Create Order",
+          "id": "261f9d07-0736-4657-9f7d-8dbd1553f5b2",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-User-ID",
+                "value": "1",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"productId\": 1,\r\n    \"quantity\": 10\r\n}"
+            },
+            "url": {
+              "raw": "{{orderURL}}/api/orders",
+              "host": [
+                "{{orderURL}}"
+              ],
+              "path": [
+                "api",
+                "orders"
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "id": "a3ba4847-2fac-4625-b680-540fc0c5e25f"
+    },
+    {
+      "name": "Gateway",
+      "item": [
+        {
+          "name": "Users API Gateway",
+          "item": [
+            {
+              "name": "Create User",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "849ae4d1-309a-42d7-814d-e99cfc8abb1a",
+                    "exec": [
+                      "pm.test(\"Successful POST request\", function () {",
+                      "    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+                      "});",
+                      ""
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "id": "69867518-222d-40af-990c-3ee3a0a03663",
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"firstName\": \"Malcolm\",\n    \"lastName\": \"Githuka\",\n    \"email\": \"malcolm@example.com\",\n    \"phone\": \"+254712345678\",\n    \"address\": {\n        \"street\": \"12 Riverside Lane\",\n        \"city\": \"Nairobi\",\n        \"state\": \"Nairobi County\",\n        \"country\": \"Kenya\",\n        \"zipcode\": \"00100\"\n    }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{gatewayURL}}/api/users",
+                  "host": [
+                    "{{gatewayURL}}"
+                  ],
+                  "path": [
+                    "api",
+                    "users"
+                  ]
+                },
+                "description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
+              },
+              "response": []
+            },
+            {
+              "name": "Get All Users",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "ae4ae6f9-c9a2-4e3c-99f6-f60ff873029a",
+                    "exec": [
+                      "pm.test(\"Status code is 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "id": "69f40ef3-d03d-49a9-96ea-2a06871222b8",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{gatewayURL}}/api/users",
+                  "host": [
+                    "{{gatewayURL}}"
+                  ],
+                  "path": [
+                    "api",
+                    "users"
+                  ]
+                },
+                "description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
+              },
+              "response": []
+            },
+            {
+              "name": "Get User by ID",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "ae4ae6f9-c9a2-4e3c-99f6-f60ff873029a",
+                    "exec": [
+                      "// Visualization Script",
+                      "// Visualization Script",
+                      "const template = `",
+                      "<div style=\"max-width: 400px; margin: 2em auto; padding: 1.5em; border-radius: 8px; background: #f7f7f9; box-shadow: 0 2px 8px rgba(0,0,0,0.07); font-family: Arial, sans-serif;\">",
+                      "  <h3 style=\"margin-top: 0; color: #2d3a4b;\">User Details</h3>",
+                      "  <table style=\"width: 100%; border-collapse: collapse;\">",
+                      "    <tr>",
+                      "      <td style=\"font-weight: bold; padding: 0.5em 0; color: #555;\">ID</td>",
+                      "      <td style=\"padding: 0.5em 0;\">{{user.id}}</td>",
+                      "    </tr>",
+                      "    <tr>",
+                      "      <td style=\"font-weight: bold; padding: 0.5em 0; color: #555;\">Name</td>",
+                      "      <td style=\"padding: 0.5em 0;\">{{user.name}}</td>",
+                      "    </tr>",
+                      "    <tr>",
+                      "      <td style=\"font-weight: bold; padding: 0.5em 0; color: #555;\">Email</td>",
+                      "      <td style=\"padding: 0.5em 0;\">{{user.email}}</td>",
+                      "    </tr>",
+                      "  </table>",
+                      "</div>`;",
+                      "",
+                      "function createPayload() {",
+                      "    let user = {};",
+                      "    try {",
+                      "        user = pm.response.json();",
+                      "    } catch (e) {",
+                      "        user = { id: 'N/A', name: 'N/A', email: 'N/A' };",
+                      "    }",
+                      "    return { user };",
+                      "}",
+                      "",
+                      "pm.visualizer.set(template, createPayload());"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                },
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "id": "47343e40-0c42-4b7b-b63c-3f8a44cdb8fb",
+                    "exec": [
+                      ""
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "id": "369b25c0-cc9d-4f3a-9055-05655a0447cc",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{gatewayURL}}/api/users/1",
+                  "host": [
+                    "{{gatewayURL}}"
+                  ],
+                  "path": [
+                    "api",
+                    "users",
+                    "1"
+                  ]
+                },
+                "description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
+              },
+              "response": []
+            },
+            {
+              "name": "Update User by ID",
+              "id": "5445cb68-dfc2-4001-ad2d-dbb75216c86e",
+              "request": {
+                "method": "PATCH",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n\t\"firstName\": \"Malcolm\",\r\n    \"lastName\": \"X\",\r\n    \"email\": \"malcolm.githuka@gmail.com\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{gatewayURL}}/api/users/694676be92d3ee3eb58d87d6",
+                  "host": [
+                    "{{gatewayURL}}"
+                  ],
+                  "path": [
+                    "api",
+                    "users",
+                    "694676be92d3ee3eb58d87d6"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ],
+          "id": "29e3711b-9e08-4baf-aed9-9520566707d1"
+        },
+        {
+          "name": "Products API Gateway",
+          "item": [
+            {
+              "name": "Get All Products",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "ae4ae6f9-c9a2-4e3c-99f6-f60ff873029a",
+                    "exec": [
+                      "pm.test(\"Status code is 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "id": "6e39e8aa-789f-460c-ad65-0019797ef96a",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{gatewayURL}}/api/products",
+                  "host": [
+                    "{{gatewayURL}}"
+                  ],
+                  "path": [
+                    "api",
+                    "products"
+                  ]
+                },
+                "description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
+              },
+              "response": []
+            },
+            {
+              "name": "Get Products By Id",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "ae4ae6f9-c9a2-4e3c-99f6-f60ff873029a",
+                    "exec": [
+                      "pm.test(\"Status code is 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "id": "139ca769-1bef-465f-9553-011f07c93090",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{gatewayURL}}/api/products/1",
+                  "host": [
+                    "{{gatewayURL}}"
+                  ],
+                  "path": [
+                    "api",
+                    "products",
+                    "1"
+                  ]
+                },
+                "description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
+              },
+              "response": []
+            },
+            {
+              "name": "Get All Active Products",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "ae4ae6f9-c9a2-4e3c-99f6-f60ff873029a",
+                    "exec": [
+                      "pm.test(\"Status code is 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "id": "20191506-8b66-4dec-a25f-233e25fa3b1e",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{gatewayURL}}/api/products/active",
+                  "host": [
+                    "{{gatewayURL}}"
+                  ],
+                  "path": [
+                    "api",
+                    "products",
+                    "active"
+                  ]
+                },
+                "description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
+              },
+              "response": []
+            },
+            {
+              "name": "Update Product by ID",
+              "id": "b6f5a3fc-cb86-4e43-9977-413b23b2de16",
+              "request": {
+                "method": "PATCH",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n\t\"firstName\": \"Malcolm\",\r\n    \"lastName\": \"X\",\r\n    \"email\": \"malcolm.githuka@gmail.com\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{gatewayURL}}/api/products/1",
+                  "host": [
+                    "{{gatewayURL}}"
+                  ],
+                  "path": [
+                    "api",
+                    "products",
+                    "1"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Create Products",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "849ae4d1-309a-42d7-814d-e99cfc8abb1a",
+                    "exec": [
+                      "pm.test(\"Successful POST request\", function () {",
+                      "    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+                      "});",
+                      ""
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "id": "8eab3a7d-e056-4ea5-9751-44ff2d3198a9",
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"name\": \"Wireless Mouse\",\n    \"description\": \"A high-precision wireless mouse with ergonomic design.\",\n    \"price\": 29.99,\n    \"stockQuantity\": 150,\n    \"category\": \"Electronics\",\n    \"imageUrl\": \"https://example.com/images/wireless-mouse.jpg\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{gatewayURL}}/api/products",
+                  "host": [
+                    "{{gatewayURL}}"
+                  ],
+                  "path": [
+                    "api",
+                    "products"
+                  ]
+                },
+                "description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
+              },
+              "response": []
+            },
+            {
+              "name": "Delete Product",
+              "id": "e7158361-9cc1-4e08-9c0e-e0d89c4f35f2",
+              "request": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{gatewayURL}}/api/products/1",
+                  "host": [
+                    "{{gatewayURL}}"
+                  ],
+                  "path": [
+                    "api",
+                    "products",
+                    "1"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Search Products",
+              "id": "c9208fb6-eb20-4ed7-9b8c-a5ac84e23362",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{gatewayURL}}/api/products/search?keyword=W",
+                  "host": [
+                    "{{gatewayURL}}"
+                  ],
+                  "path": [
+                    "api",
+                    "products",
+                    "search"
+                  ],
+                  "query": [
+                    {
+                      "key": "keyword",
+                      "value": "W"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            }
+          ],
+          "id": "9456df37-9db9-4fa5-aae2-b86fa2c162a8"
+        },
+        {
+          "name": "Cart API Gateway",
+          "item": [
+            {
+              "name": "Add to Cart",
+              "id": "b74d9108-aebf-4a2b-b095-a39ac5fef9ac",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "X-User-ID",
+                    "value": "694689adaecf23a763f15a12",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"productId\": 1,\r\n    \"quantity\": 10\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{gatewayURL}}/api/cart",
+                  "host": [
+                    "{{gatewayURL}}"
+                  ],
+                  "path": [
+                    "api",
+                    "cart"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Delete from Cart",
+              "id": "1ddf02d7-a8be-43e9-b9c7-fae4e683fa06",
+              "request": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "x-user-id",
+                    "value": "1",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
+                "url": {
+                  "raw": "{{gatewayURL}}/api/cart/items/1",
+                  "host": [
+                    "{{gatewayURL}}"
+                  ],
+                  "path": [
+                    "api",
+                    "cart",
+                    "items",
+                    "1"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get User Cart",
+              "id": "2a3caef8-035e-4137-849f-344fccffcebe",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "x-user-id",
+                    "value": "694689adaecf23a763f15a12",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
+                "url": {
+                  "raw": "{{gatewayURL}}/api/cart",
+                  "host": [
+                    "{{gatewayURL}}"
+                  ],
+                  "path": [
+                    "api",
+                    "cart"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ],
+          "id": "1bd35f4f-ce44-4168-a124-b78616da4a5a"
+        },
+        {
+          "name": "Order API Gateway",
+          "item": [
+            {
+              "name": "Create Order",
+              "id": "7955e30c-19bb-491e-94d2-42a9369f3d95",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "X-User-ID",
+                    "value": "694689adaecf23a763f15a12",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"productId\": 1,\r\n    \"quantity\": 10\r\n}"
+                },
+                "url": {
+                  "raw": "{{gatewayURL}}/api/orders",
+                  "host": [
+                    "{{gatewayURL}}"
+                  ],
+                  "path": [
+                    "api",
+                    "orders"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ],
+          "id": "f9cfc714-8864-4dfd-9c8a-5644872747be"
+        }
+      ],
+      "id": "510dfb67-92df-46ca-9667-7e8c3fbe221b"
+    },
+    {
+      "name": "Gateway Security",
+      "item": [
+        {
+          "name": "Users API Gateway",
+          "item": [
+            {
+              "name": "Create User",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "849ae4d1-309a-42d7-814d-e99cfc8abb1a",
+                    "exec": [
+                      "pm.test(\"Successful POST request\", function () {",
+                      "    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+                      "});",
+                      ""
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "id": "a519a793-da67-4ac2-a5ca-b32db3f1d689",
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"username\": \"malcolm3\",\n    \"password\": \"malcolm3\",\n    \"firstName\": \"Malcolm3\",\n    \"lastName\": \"Githuka\",\n    \"email\": \"malcolm3@example.com\",\n    \"phone\": \"+254712345689\",\n    \"address\": {\n        \"street\": \"12 Riverside Lane\",\n        \"city\": \"Nairobi\",\n        \"state\": \"Nairobi County\",\n        \"country\": \"Kenya\",\n        \"zipcode\": \"00100\"\n    }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{gatewayURL}}/api/users",
+                  "host": [
+                    "{{gatewayURL}}"
+                  ],
+                  "path": [
+                    "api",
+                    "users"
+                  ]
+                },
+                "description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
+              },
+              "response": []
+            },
+            {
+              "name": "Get All Users",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "ae4ae6f9-c9a2-4e3c-99f6-f60ff873029a",
+                    "exec": [
+                      "pm.test(\"Status code is 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "id": "62ddf690-2b5b-403d-9abc-1ef3b17af7fd",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{gatewayURL}}/api/users",
+                  "host": [
+                    "{{gatewayURL}}"
+                  ],
+                  "path": [
+                    "api",
+                    "users"
+                  ]
+                },
+                "description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
+              },
+              "response": []
+            },
+            {
+              "name": "Get User by ID",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "ae4ae6f9-c9a2-4e3c-99f6-f60ff873029a",
+                    "exec": [
+                      "// Visualization Script",
+                      "// Visualization Script",
+                      "const template = `",
+                      "<div style=\"max-width: 400px; margin: 2em auto; padding: 1.5em; border-radius: 8px; background: #f7f7f9; box-shadow: 0 2px 8px rgba(0,0,0,0.07); font-family: Arial, sans-serif;\">",
+                      "  <h3 style=\"margin-top: 0; color: #2d3a4b;\">User Details</h3>",
+                      "  <table style=\"width: 100%; border-collapse: collapse;\">",
+                      "    <tr>",
+                      "      <td style=\"font-weight: bold; padding: 0.5em 0; color: #555;\">ID</td>",
+                      "      <td style=\"padding: 0.5em 0;\">{{user.id}}</td>",
+                      "    </tr>",
+                      "    <tr>",
+                      "      <td style=\"font-weight: bold; padding: 0.5em 0; color: #555;\">Name</td>",
+                      "      <td style=\"padding: 0.5em 0;\">{{user.name}}</td>",
+                      "    </tr>",
+                      "    <tr>",
+                      "      <td style=\"font-weight: bold; padding: 0.5em 0; color: #555;\">Email</td>",
+                      "      <td style=\"padding: 0.5em 0;\">{{user.email}}</td>",
+                      "    </tr>",
+                      "  </table>",
+                      "</div>`;",
+                      "",
+                      "function createPayload() {",
+                      "    let user = {};",
+                      "    try {",
+                      "        user = pm.response.json();",
+                      "    } catch (e) {",
+                      "        user = { id: 'N/A', name: 'N/A', email: 'N/A' };",
+                      "    }",
+                      "    return { user };",
+                      "}",
+                      "",
+                      "pm.visualizer.set(template, createPayload());"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                },
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "id": "47343e40-0c42-4b7b-b63c-3f8a44cdb8fb",
+                    "exec": [
+                      ""
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "id": "96c29b9f-91ab-4a73-baaa-e550a042e847",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{gatewayURL}}/api/users/1",
+                  "host": [
+                    "{{gatewayURL}}"
+                  ],
+                  "path": [
+                    "api",
+                    "users",
+                    "1"
+                  ]
+                },
+                "description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
+              },
+              "response": []
+            },
+            {
+              "name": "Update User by ID",
+              "id": "0fc1d9ed-a65d-404d-b01a-2ca71a2a7544",
+              "request": {
+                "method": "PATCH",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n\t\"firstName\": \"Malcolm\",\r\n    \"lastName\": \"X\",\r\n    \"email\": \"malcolm.githuka@gmail.com\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{gatewayURL}}/api/users/694676be92d3ee3eb58d87d6",
+                  "host": [
+                    "{{gatewayURL}}"
+                  ],
+                  "path": [
+                    "api",
+                    "users",
+                    "694676be92d3ee3eb58d87d6"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ],
+          "id": "7bd1e6cd-9d50-4577-816a-f7e1b3bbf584"
+        },
+        {
+          "name": "Products API Gateway",
+          "item": [
+            {
+              "name": "Get All Products",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "ae4ae6f9-c9a2-4e3c-99f6-f60ff873029a",
+                    "exec": [
+                      "pm.test(\"Status code is 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "id": "2e431aba-497d-4f48-a051-8a1e45d9ee57",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{gatewayURL}}/api/products",
+                  "host": [
+                    "{{gatewayURL}}"
+                  ],
+                  "path": [
+                    "api",
+                    "products"
+                  ]
+                },
+                "description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
+              },
+              "response": []
+            },
+            {
+              "name": "Get Products By Id",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "ae4ae6f9-c9a2-4e3c-99f6-f60ff873029a",
+                    "exec": [
+                      "pm.test(\"Status code is 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "id": "f093dc65-b479-49c9-a16f-a0d22ab79252",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{gatewayURL}}/api/products/1",
+                  "host": [
+                    "{{gatewayURL}}"
+                  ],
+                  "path": [
+                    "api",
+                    "products",
+                    "1"
+                  ]
+                },
+                "description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
+              },
+              "response": []
+            },
+            {
+              "name": "Get All Active Products",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "ae4ae6f9-c9a2-4e3c-99f6-f60ff873029a",
+                    "exec": [
+                      "pm.test(\"Status code is 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "id": "5ff4a0dd-c400-4136-8c5e-dcde67205548",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{gatewayURL}}/api/products/active",
+                  "host": [
+                    "{{gatewayURL}}"
+                  ],
+                  "path": [
+                    "api",
+                    "products",
+                    "active"
+                  ]
+                },
+                "description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
+              },
+              "response": []
+            },
+            {
+              "name": "Update Product by ID",
+              "id": "f3e101c0-7c5d-4c2d-bb28-3a9c275f3b18",
+              "request": {
+                "method": "PATCH",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n\t\"firstName\": \"Malcolm\",\r\n    \"lastName\": \"X\",\r\n    \"email\": \"malcolm.githuka@gmail.com\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{gatewayURL}}/api/products/1",
+                  "host": [
+                    "{{gatewayURL}}"
+                  ],
+                  "path": [
+                    "api",
+                    "products",
+                    "1"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Create Products",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "849ae4d1-309a-42d7-814d-e99cfc8abb1a",
+                    "exec": [
+                      "pm.test(\"Successful POST request\", function () {",
+                      "    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+                      "});",
+                      ""
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "id": "5472e883-cbfa-43e7-86b1-ca5af1096254",
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"name\": \"Wireless Mouse\",\n    \"description\": \"A high-precision wireless mouse with ergonomic design.\",\n    \"price\": 29.99,\n    \"stockQuantity\": 150,\n    \"category\": \"Electronics\",\n    \"imageUrl\": \"https://example.com/images/wireless-mouse.jpg\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{gatewayURL}}/api/products",
+                  "host": [
+                    "{{gatewayURL}}"
+                  ],
+                  "path": [
+                    "api",
+                    "products"
+                  ]
+                },
+                "description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
+              },
+              "response": []
+            },
+            {
+              "name": "Delete Product",
+              "id": "fde3c1f6-eaef-4272-828c-109425c3f467",
+              "request": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{gatewayURL}}/api/products/1",
+                  "host": [
+                    "{{gatewayURL}}"
+                  ],
+                  "path": [
+                    "api",
+                    "products",
+                    "1"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Search Products",
+              "id": "ee068218-28cc-4171-b477-632e1104942c",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{gatewayURL}}/api/products/search?keyword=W",
+                  "host": [
+                    "{{gatewayURL}}"
+                  ],
+                  "path": [
+                    "api",
+                    "products",
+                    "search"
+                  ],
+                  "query": [
+                    {
+                      "key": "keyword",
+                      "value": "W"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            }
+          ],
+          "id": "19dc9e40-8c45-4a0d-b0ea-58d127f7df92"
+        },
+        {
+          "name": "Cart API Gateway",
+          "item": [
+            {
+              "name": "Add to Cart",
+              "id": "ad21e592-9105-4107-a63f-aedb205b4829",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "X-User-ID",
+                    "value": "694689adaecf23a763f15a12",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"productId\": 1,\r\n    \"quantity\": 10\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{gatewayURL}}/api/cart",
+                  "host": [
+                    "{{gatewayURL}}"
+                  ],
+                  "path": [
+                    "api",
+                    "cart"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Delete from Cart",
+              "id": "7fccfb0f-94b8-4dcd-b213-913055de047d",
+              "request": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "x-user-id",
+                    "value": "1",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
+                "url": {
+                  "raw": "{{gatewayURL}}/api/cart/items/1",
+                  "host": [
+                    "{{gatewayURL}}"
+                  ],
+                  "path": [
+                    "api",
+                    "cart",
+                    "items",
+                    "1"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get User Cart",
+              "id": "e89d2be8-1d94-4194-a336-deaa4b517f6c",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "x-user-id",
+                    "value": "694689adaecf23a763f15a12",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
+                "url": {
+                  "raw": "{{gatewayURL}}/api/cart",
+                  "host": [
+                    "{{gatewayURL}}"
+                  ],
+                  "path": [
+                    "api",
+                    "cart"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ],
+          "id": "64c8be41-74eb-4f4e-bca6-c75e048dbd27"
+        },
+        {
+          "name": "Order API Gateway",
+          "item": [
+            {
+              "name": "Create Order",
+              "id": "ed26100d-e8de-4213-9b6c-3e252afb8d18",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "X-User-ID",
+                    "value": "694689adaecf23a763f15a12",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"productId\": 1,\r\n    \"quantity\": 10\r\n}"
+                },
+                "url": {
+                  "raw": "{{gatewayURL}}/api/orders",
+                  "host": [
+                    "{{gatewayURL}}"
+                  ],
+                  "path": [
+                    "api",
+                    "orders"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ],
+          "id": "c16e1837-51fe-4d5f-b55b-67f73e2d27c8"
+        }
+      ],
+      "id": "0bd8dbd0-dc91-4e0b-a2b5-67534100a08a",
+      "auth": {
+        "type": "oauth2",
+        "oauth2": [
+          {
+            "key": "authUrl",
+            "value": "http://localhost:8443/realms/store/protocol/openid-connect/auth",
+            "type": "string"
+          },
+          {
+            "key": "accessTokenUrl",
+            "value": "http://localhost:8443/realms/store/protocol/openid-connect/token",
+            "type": "string"
+          },
+          {
+            "key": "scope",
+            "value": "openid email profile roles",
+            "type": "string"
+          },
+          {
+            "key": "refreshRequestParams",
+            "value": [],
+            "type": "any"
+          },
+          {
+            "key": "tokenRequestParams",
+            "value": [],
+            "type": "any"
+          },
+          {
+            "key": "authRequestParams",
+            "value": [],
+            "type": "any"
+          },
+          {
+            "key": "tokenName",
+            "value": "oauth-store-micro",
+            "type": "string"
+          },
+          {
+            "key": "challengeAlgorithm",
+            "value": "S256",
+            "type": "string"
+          },
+          {
+            "key": "redirect_uri",
+            "value": "http://localhost:5173",
+            "type": "string"
+          },
+          {
+            "key": "grant_type",
+            "value": "authorization_code_with_pkce",
+            "type": "string"
+          },
+          {
+            "key": "clientId",
+            "value": "oauth2-pkce",
+            "type": "string"
+          },
+          {
+            "key": "addTokenTo",
+            "value": "header",
+            "type": "string"
+          },
+          {
+            "key": "client_authentication",
+            "value": "header",
+            "type": "string"
+          }
+        ]
+      },
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "id": "dd289ff0-353f-4455-b5e9-a95ba92ea91f",
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {},
+            "exec": [
+              ""
+            ]
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "id": "8c43996b-f8a3-4df3-bde5-a37e9b350890",
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {},
+            "exec": [
+              ""
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Kafka",
+      "item": [
+        {
+          "name": "Send",
+          "id": "ed14b831-3bdf-4b02-bab9-fdffe24ca7ed",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "localhost:8080/api/send?message=This is Malcolm",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "send"
+              ],
+              "query": [
+                {
+                  "key": "message",
+                  "value": "This is Malcolm"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "id": "b676a4f6-7f01-40fe-8a96-7fbef7750933"
+    },
+    {
+      "name": "Functions",
+      "item": [
+        {
+          "name": "uppercase",
+          "id": "54375f4f-9ccd-4748-a60a-c84e13032ed2",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "\"hello\"",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:8080/uppercase",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "uppercase"
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "id": "dadcef8a-4730-415e-8990-34b262871276"
+    },
+    {
+      "name": "Keycloak",
+      "item": [
+        {
+          "name": "proxy resource server",
+          "id": "2903865f-fb75-4e8c-b808-74b937699a26",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJkSkgzNmM2S29iRUNoX184Vm10Znp0TW41Y01RckVCRG5HSFItYWNicUtVIn0.eyJleHAiOjE3Njg2MzYzMDQsImlhdCI6MTc2ODYzNjAwNCwianRpIjoidHJydGNjOmFiOGI0MzFkLTkxZGUtOGZkMy0zZjNiLWIwMTEzMGEyZTUyYiIsImlzcyI6Imh0dHA6Ly8xMjcuMC4wLjE6ODQ0My9yZWFsbXMvb2F1dGgyLWRlbW9zIiwiYXVkIjoiYWNjb3VudCIsInN1YiI6IjhmMzVmZGQ4LWE5YmQtNDgxNC05ZGQwLWY4ZGZjMTZiZjI5MCIsInR5cCI6IkJlYXJlciIsImF6cCI6Im9hdXRoMi1jbGllbnQtY3JlZGVudGlhbHMiLCJhY3IiOiIxIiwiYWxsb3dlZC1vcmlnaW5zIjpbIi8qIl0sInJlYWxtX2FjY2VzcyI6eyJyb2xlcyI6WyJkZWZhdWx0LXJvbGVzLW9hdXRoMi1kZW1vcyIsIm9mZmxpbmVfYWNjZXNzIiwidW1hX2F1dGhvcml6YXRpb24iXX0sInJlc291cmNlX2FjY2VzcyI6eyJhY2NvdW50Ijp7InJvbGVzIjpbIm1hbmFnZS1hY2NvdW50IiwibWFuYWdlLWFjY291bnQtbGlua3MiLCJ2aWV3LXByb2ZpbGUiXX19LCJzY29wZSI6Im9wZW5pZCBlbWFpbCBwcm9maWxlIiwiY2xpZW50SG9zdCI6IjE3Mi4xNy4wLjEiLCJlbWFpbF92ZXJpZmllZCI6ZmFsc2UsInByZWZlcnJlZF91c2VybmFtZSI6InNlcnZpY2UtYWNjb3VudC1vYXV0aDItY2xpZW50LWNyZWRlbnRpYWxzIiwiY2xpZW50QWRkcmVzcyI6IjE3Mi4xNy4wLjEiLCJjbGllbnRfaWQiOiJvYXV0aDItY2xpZW50LWNyZWRlbnRpYWxzIn0.HROo5_AZUwGY-C52XDyTJf6b6fQHPW1r-S9Xrf3hLx1yWc_BezDvK4TLtiHTQCgdq-vgP4Wc8tgx903hwkqpC0NIJ8snBUYPrSy6X0IAJeuncNY3Fj2_4PvkzQSsegHqD1hc6JRF2cUmKuyCFSw1ydJ5ne9Yqg2SxMlahH_gWLBOUZd0g4F7jCRlIB2PKBVQM2oae6FNY9Dxf9eB837r_f4Jy-2sf9bkpRdvVlWubPPzzZe1qMZRzRMB7McPC_ld7W8l8wu5LUg4kEpzf7S-BbdnZV26ttCW2crC_wK2gDhUVC24u5pCkLMJnEE8cpSNaXrA782ffAOPKlDkhNjFcQ",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "\"hello\""
+            },
+            "url": {
+              "raw": "localhost:8080/proxy",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "proxy"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get token then call proxy resource server",
+          "id": "f169bdf7-2ac6-4013-a3c0-acbe25fecd02",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "openid email profile",
+                  "type": "string"
+                },
+                {
+                  "key": "clientSecret",
+                  "value": "b7vAkp8nBRZFEsSfCzuxytZ6kmmbM9eG",
+                  "type": "string"
+                },
+                {
+                  "key": "clientId",
+                  "value": "oauth2-client-credentials",
+                  "type": "string"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "http://127.0.0.1:8443/realms/oauth2-demos/protocol/openid-connect/token",
+                  "type": "string"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials",
+                  "type": "string"
+                },
+                {
+                  "key": "tokenName",
+                  "value": "oauth-client-credentials-demo",
+                  "type": "string"
+                },
+                {
+                  "key": "addTokenTo",
+                  "value": "header",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "\"hello\""
+            },
+            "url": {
+              "raw": "localhost:8080/proxy",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "proxy"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get token from keycloak",
+          "id": "ae010d3b-45dd-4ece-ac6e-be34e30dad54",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "grant_type",
+                  "value": "client_credentials",
+                  "type": "text"
+                },
+                {
+                  "key": "client_id",
+                  "value": "oauth2-client-credentials",
+                  "type": "text"
+                },
+                {
+                  "key": "client_secret",
+                  "value": "b7vAkp8nBRZFEsSfCzuxytZ6kmmbM9eG",
+                  "type": "text"
+                },
+                {
+                  "key": "scope",
+                  "value": "openid email profile",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "http://127.0.0.1:8443/realms/oauth2-demos/protocol/openid-connect/token",
+              "protocol": "http",
+              "host": [
+                "127",
+                "0",
+                "0",
+                "1"
+              ],
+              "port": "8443",
+              "path": [
+                "realms",
+                "oauth2-demos",
+                "protocol",
+                "openid-connect",
+                "token"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "PKCE flow",
+          "id": "9c68b8d6-216f-4510-826a-efbef575ed0f",
+          "request": {
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "redirect_uri",
+                  "value": "http://localhost:5173",
+                  "type": "string"
+                },
+                {
+                  "key": "useBrowser",
+                  "value": false,
+                  "type": "boolean"
+                },
+                {
+                  "key": "clientSecret",
+                  "value": "",
+                  "type": "string"
+                },
+                {
+                  "key": "clientId",
+                  "value": "oauth2-pkce-demo",
+                  "type": "string"
+                },
+                {
+                  "key": "authUrl",
+                  "value": "http://127.0.0.1:8443/realms/oauth2-demos/protocol/openid-connect/auth",
+                  "type": "string"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "authorization_code_with_pkce",
+                  "type": "string"
+                },
+                {
+                  "key": "tokenName",
+                  "value": "oauth-pkce-flow",
+                  "type": "string"
+                },
+                {
+                  "key": "scope",
+                  "value": "openid email profile",
+                  "type": "string"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "http://127.0.0.1:8443/realms/oauth2-demos/protocol/openid-connect/token",
+                  "type": "string"
+                },
+                {
+                  "key": "addTokenTo",
+                  "value": "header",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJkSkgzNmM2S29iRUNoX184Vm10Znp0TW41Y01RckVCRG5HSFItYWNicUtVIn0.eyJleHAiOjE3Njg2MzYzMDQsImlhdCI6MTc2ODYzNjAwNCwianRpIjoidHJydGNjOmFiOGI0MzFkLTkxZGUtOGZkMy0zZjNiLWIwMTEzMGEyZTUyYiIsImlzcyI6Imh0dHA6Ly8xMjcuMC4wLjE6ODQ0My9yZWFsbXMvb2F1dGgyLWRlbW9zIiwiYXVkIjoiYWNjb3VudCIsInN1YiI6IjhmMzVmZGQ4LWE5YmQtNDgxNC05ZGQwLWY4ZGZjMTZiZjI5MCIsInR5cCI6IkJlYXJlciIsImF6cCI6Im9hdXRoMi1jbGllbnQtY3JlZGVudGlhbHMiLCJhY3IiOiIxIiwiYWxsb3dlZC1vcmlnaW5zIjpbIi8qIl0sInJlYWxtX2FjY2VzcyI6eyJyb2xlcyI6WyJkZWZhdWx0LXJvbGVzLW9hdXRoMi1kZW1vcyIsIm9mZmxpbmVfYWNjZXNzIiwidW1hX2F1dGhvcml6YXRpb24iXX0sInJlc291cmNlX2FjY2VzcyI6eyJhY2NvdW50Ijp7InJvbGVzIjpbIm1hbmFnZS1hY2NvdW50IiwibWFuYWdlLWFjY291bnQtbGlua3MiLCJ2aWV3LXByb2ZpbGUiXX19LCJzY29wZSI6Im9wZW5pZCBlbWFpbCBwcm9maWxlIiwiY2xpZW50SG9zdCI6IjE3Mi4xNy4wLjEiLCJlbWFpbF92ZXJpZmllZCI6ZmFsc2UsInByZWZlcnJlZF91c2VybmFtZSI6InNlcnZpY2UtYWNjb3VudC1vYXV0aDItY2xpZW50LWNyZWRlbnRpYWxzIiwiY2xpZW50QWRkcmVzcyI6IjE3Mi4xNy4wLjEiLCJjbGllbnRfaWQiOiJvYXV0aDItY2xpZW50LWNyZWRlbnRpYWxzIn0.HROo5_AZUwGY-C52XDyTJf6b6fQHPW1r-S9Xrf3hLx1yWc_BezDvK4TLtiHTQCgdq-vgP4Wc8tgx903hwkqpC0NIJ8snBUYPrSy6X0IAJeuncNY3Fj2_4PvkzQSsegHqD1hc6JRF2cUmKuyCFSw1ydJ5ne9Yqg2SxMlahH_gWLBOUZd0g4F7jCRlIB2PKBVQM2oae6FNY9Dxf9eB837r_f4Jy-2sf9bkpRdvVlWubPPzzZe1qMZRzRMB7McPC_ld7W8l8wu5LUg4kEpzf7S-BbdnZV26ttCW2crC_wK2gDhUVC24u5pCkLMJnEE8cpSNaXrA782ffAOPKlDkhNjFcQ",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "localhost:8080/api/home",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "home"
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "id": "5b0ccece-7d13-4c2c-ae64-8d943bc364ee"
+    },
+    {
+      "name": "Keycloak AdminAPI",
+      "item": [
+        {
+          "name": "Get Realm Role by Name",
+          "id": "6cdc0cc2-e9e9-45f3-b084-755b048c7018",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{keycloak_url}}/admin/realms/{{realm}}/roles/{{role_name}}",
+              "host": [
+                "{{keycloak_url}}"
+              ],
+              "path": [
+                "admin",
+                "realms",
+                "{{realm}}",
+                "roles",
+                "{{role_name}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Assign Realm Role to User",
+          "id": "5a4d0f95-aa39-4e5f-8159-05a97014c85a",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "[\n  {\n    \"id\": \"{{role_id}}\",\n    \"name\": \"{{role_name}}\"\n  }\n]"
+            },
+            "url": {
+              "raw": "{{keycloak_url}}/admin/realms/{{realm}}/users/{{user_id}}/role-mappings/realm",
+              "host": [
+                "{{keycloak_url}}"
+              ],
+              "path": [
+                "admin",
+                "realms",
+                "{{realm}}",
+                "users",
+                "{{user_id}}",
+                "role-mappings",
+                "realm"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Client Role by Name",
+          "id": "4228b74c-9d46-458b-924f-c17a9202c3a9",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{keycloak_url}}/admin/realms/{{realm}}/clients/{{client_id}}/roles/{{role_name}}",
+              "host": [
+                "{{keycloak_url}}"
+              ],
+              "path": [
+                "admin",
+                "realms",
+                "{{realm}}",
+                "clients",
+                "{{client_id}}",
+                "roles",
+                "{{role_name}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Assign Client Role to User",
+          "id": "aecb7462-7c30-4ee8-8c70-c431a09659bb",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "[\n  {\n    \"id\": \"{{role_id}}\",\n    \"name\": \"{{role_name}}\"\n  }\n]"
+            },
+            "url": {
+              "raw": "{{keycloak_url}}/admin/realms/{{realm}}/users/{{user_id}}/role-mappings/clients/{{client_id}}",
+              "host": [
+                "{{keycloak_url}}"
+              ],
+              "path": [
+                "admin",
+                "realms",
+                "{{realm}}",
+                "users",
+                "{{user_id}}",
+                "role-mappings",
+                "clients",
+                "{{client_id}}"
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "id": "6445a657-5350-4a07-b2a1-8d723eddd252"
+    },
+    {
+      "name": "Config Refresh",
+      "id": "73ff032c-dff3-45f3-9237-b60bebaa4b0f",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/actuator/refresh",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "actuator",
+            "refresh"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Config Bus Refresh",
+      "id": "bb75199c-b994-4ea6-b7c5-88a6a7debeef",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8082/actuator/busrefresh",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8082",
+          "path": [
+            "actuator",
+            "busrefresh"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Encrypt Key",
+      "id": "d9472895-9a82-459e-9b26-a72c16cf3460",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8888/encrypt",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8888",
+          "path": [
+            "encrypt"
+          ]
+        }
+      },
+      "response": []
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "id": "2a75b201-1a01-4684-8d55-a52d32afb50f",
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "id": "a1b587f2-b2a7-4cd5-a145-625b4fce3644",
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "id": "424bd551-8ec4-4a45-b657-acce8a821baa",
+      "key": "userURL",
+      "value": ""
+    },
+    {
+      "id": "93addcb7-5119-4223-a8b5-efd80b915b1c",
+      "key": "productURL",
+      "value": ""
+    },
+    {
+      "id": "222bf09c-2b05-41a6-b8f2-1907304a8aad",
+      "key": "orderURL",
+      "value": ""
+    },
+    {
+      "id": "aa3a1283-af0e-42bb-818b-53254d0c6bc9",
+      "key": "gatewayURL",
+      "value": ""
+    }
+  ]
+}
